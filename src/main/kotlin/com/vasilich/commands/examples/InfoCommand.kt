@@ -13,9 +13,9 @@ Component
 public class InfoCommand [Autowired] (config: ObjectNode, mapper: ObjectMapper): SimpleCommand {
 
     /**
-     * All "descriptions" values from the second layer
+     * All "descriptions" values from the second layer of config file
      * Example {
-     *   one {
+     *   one: {
      *      description: "This text will be grabbed"
      *   }
      * }
