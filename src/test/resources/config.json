@@ -35,8 +35,13 @@
 				"script": "src/test/resources/uptime",
 				"output": "Oh, long enough: {0}"
 			}
+		],
+		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"
+	},
 
-		]
+	"info": {
+		"enabled": true,
+		"aliases": ["can you do", "help"]
 	}
 
 }

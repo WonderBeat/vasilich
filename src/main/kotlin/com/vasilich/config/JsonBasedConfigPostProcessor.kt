@@ -27,10 +27,12 @@ public class JsonBasedConfigPostProcessor(private val appCfg: JsonNode,
         if(annotation == null) {
             return bean
         }
-
         val node = appCfg.get(annotation.value)
         val obj = jsonMapper.convertValue(node, javaClass<ObjectNode>())
-        return jsonMapper.readValue(obj!!.traverse(), bean!!.javaClass)
+        if(obj == null) {
+            return bean
+        }
+        return jsonMapper.readValue(obj.traverse(), bean!!.javaClass)
     }
 
     override fun getOrder(): Int {

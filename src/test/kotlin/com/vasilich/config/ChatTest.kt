@@ -34,14 +34,23 @@ public class ChatTest() {
         matcher(response)
     }
 
+    /**
+     * Integration test. Real chat between Michalich and Vasilich
+     */
     Test fun testConfigExtraction() {
-        replyFor("Vasilich, ping", { assert(it == "pong", "Ping command should recieve a reply") })
-        replyFor("Vasilich, what time is it?", { assert(it?.startsWith("Current time")!!,
+        replyFor("Vasilich, ping", {
+            assert(it == "pong",
+                    "Ping command should recieve a reply") })
+        replyFor("Vasilich, what time is it?", {
+            assert(it?.startsWith("Current time")!!,
                     "Vasilich should reply with current server time") })
         replyFor("Vasilich, what's your uptime?", {
             assert(it?.startsWith("Oh, long enough")!! && it!!.length > 20,
-                "Vasilich should launch script and prints output") })
+                    "Vasilich should launch script and prints output") })
+        replyFor("Vasilich, what can you do?", {
+            assert(it?.contains("abracadabra")!!,
+                    "Vasilich should launch script and prints output") })
         replyFor("Vasilich, wait", { assert(it == null,
-                    "Nothing can stop Vasilich") })
+                    "Because NOTHING can stop Vasilich") })
     }
 }
