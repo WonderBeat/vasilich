@@ -23,6 +23,7 @@ import com.vasilich.commands.SimpleCommandPostProcessor
 import com.vasilich.commands.and
 import com.vasilich.commands.aliasMatchCommandDetection
 import com.vasilich.commands.outputMessageWrapper
+import com.fasterxml.jackson.databind.DeserializationFeature
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "recieve-message")
 
@@ -36,7 +37,9 @@ open public class AppContext {
     }
 
     Bean open fun objectMapper(): ObjectMapper {
-        return ObjectMapper()
+        val mapper = ObjectMapper()
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        return mapper
     }
 
     Bean open fun configReaderPostProcessor(Autowired appCfg: JsonNode,

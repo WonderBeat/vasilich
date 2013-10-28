@@ -12,6 +12,7 @@ import reactor.function.Consumer
 import java.util.concurrent.TimeUnit
 import org.junit.runner.RunWith
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
+import org.slf4j.LoggerFactory
 
 ContextConfiguration(classes = array(javaClass<AppContext>(), javaClass<ListenerContext>()))
 RunWith(javaClass<SpringJUnit4ClassRunner>())
@@ -19,7 +20,8 @@ public class ChatTest() {
 
     Autowired
     var tester: Reactor? = null
-    
+
+    val logger = LoggerFactory.getLogger(this.javaClass)!!;
 
     fun replyFor(msg: String, matcher: (reply: String?) -> Unit ) {
         tester!!.notify("test-send", Event.wrap(msg))
@@ -27,6 +29,7 @@ public class ChatTest() {
         tester!!.on(Selectors.`$`("test-recieve"), Consumer<Event<String>> {
             promise.acceptEvent(it)
         })
+        promise.compose()!!.onError(Consumer{ logger.error("Test failed", it) })
         val response = promise.compose()!!.await(5, TimeUnit.SECONDS)
         matcher(response)
     }
@@ -35,6 +38,9 @@ public class ChatTest() {
         replyFor("Vasilich, ping", { assert(it == "pong", "Ping command should recieve a reply") })
         replyFor("Vasilich, what time is it?", { assert(it?.startsWith("Current time")!!,
                     "Vasilich should reply with current server time") })
+        replyFor("Vasilich, what's your uptime?", {
+            assert(it?.startsWith("Oh, long enough")!! && it!!.length > 20,
+                "Vasilich should launch script and prints output") })
         replyFor("Vasilich, wait", { assert(it == null,
                     "Nothing can stop Vasilich") })
     }

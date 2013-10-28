@@ -23,7 +23,20 @@
 
 	"currenttime": {
 		"enabled": true,
-		"aliases": ["который час", "time", "what time", "серверное время"],
+		"aliases": ["который час", "what time", "серверное время"],
 		"output": "Current time: {0}"
+	},
+
+	"exec": {
+		"enabled": true,
+		"scripts": [
+			{
+				"aliases": ["давно работаешь", "your uptime"],
+				"script": "src/test/resources/uptime",
+				"output": "Oh, long enough: {0}"
+			}
+
+		]
 	}
+
 }
