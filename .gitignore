@@ -1,6 +1,14 @@
-*.class
+target
+.idea
 
-# Package Files #
-*.jar
-*.war
-*.ear
+#this file should not be in repository.
+src/main/resources/config.json
+
+target/
+logs/
+annotations/
+.idea
+
+*.iml
+*.tmp
+

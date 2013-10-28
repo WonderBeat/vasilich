@@ -1,0 +1,23 @@
+{
+	"xmpp": {
+		"server": "is-a-furry.org",
+		"login": "vasilich",
+		"password": "",
+		"room":
+		{
+			"id": "tapcat@muc.is-a-furry.org",
+			"username": "Vasilich",
+			"password": "tapcat.net"
+		}
+	},
+
+	"ping": {
+		"enabled": false
+	},
+
+	"currenttime": {
+		"enabled": true,
+		"aliases": ["который час", "time", "what time", "серверное время"],
+		"output": "Время: {0}"
+	}
+}
