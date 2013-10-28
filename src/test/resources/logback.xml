@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="10 minutes">
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>logs/vasilich.log</file>
+        <file>logs/vasilich-test.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rollover -->
             <fileNamePattern>logFile.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
