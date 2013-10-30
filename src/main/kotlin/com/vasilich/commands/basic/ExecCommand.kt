@@ -36,7 +36,7 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
     val scriptPrefix =  when {
         !cfg.run.isEmpty() -> cfg.run
         osname.contains("win") -> "cmd.exe /C "
-        else -> "bash -c "
+        else -> "sh "
     }
 
     override fun execute(msg: String): String? {
@@ -52,7 +52,6 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
         val psh = PumpStreamHandler(stdout)
         val scriptResource = FileSystemResource(pickProperScript(script))
         val cmd = scriptPrefix + scriptResource.getFile()!!.getAbsolutePath()
-        logger.debug("Exec: ${cmd}")
         val cl = CommandLine.parse(cmd)
         val exec = DefaultExecutor()
         exec.setWatchdog(ExecuteWatchdog(cfg.timeout))
