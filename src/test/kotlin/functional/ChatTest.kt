@@ -30,7 +30,7 @@ public class ChatTest() {
             promise.acceptEvent(it)
         })
         promise.compose()!!.onError(Consumer{ logger.error("Test failed", it) })
-        val response = promise.compose()!!.await(5, TimeUnit.SECONDS)
+        val response = promise.compose()!!.await(10, TimeUnit.SECONDS)
         matcher(response)
     }
 
