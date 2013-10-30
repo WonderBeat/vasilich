@@ -11,11 +11,13 @@ import org.apache.commons.exec.ExecuteWatchdog
 import java.text.MessageFormat
 import org.springframework.core.io.FileSystemResource
 import org.slf4j.LoggerFactory
+import com.vasilich.commands.basic.exec.ExecutionEnv
 import org.springframework.beans.factory.annotation.Autowired
+import com.vasilich.commands.basic.exec.OsDetails
 
 Component
 Config("exec")
-public class ExecCgf(val run: String = "",
+public class ExecCgf(val env: ExecutionEnv = OsDetails.current,
                      val scripts: Array<ExecUnit> = array(),
                      val timeout: Long = 10000)
 
@@ -25,19 +27,6 @@ Component
 public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
 
     val logger = LoggerFactory.getLogger(this.javaClass)!!;
-
-    val osname = System.getProperty("os.name")!!.toLowerCase()
-
-    val scriptPostfix = when {
-        osname.contains("win") -> ".bat"
-        else -> ".sh"
-    }
-
-    val scriptPrefix =  when {
-        !cfg.run.isEmpty() -> cfg.run
-        osname.contains("win") -> "cmd.exe /C "
-        else -> "sh "
-    }
 
     override fun execute(msg: String): String? {
         val scriptUnit = cfg.scripts.find { it.aliases.any { msg.contains(it) } }
@@ -52,7 +41,7 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
         val stdout = ByteArrayOutputStream()
         val psh = PumpStreamHandler(stdout)
         val scriptResource = FileSystemResource(pickProperScript(script))
-        val cmd = scriptPrefix + scriptResource.getFile()!!.getAbsolutePath()
+        val cmd = "${cfg.env.shell} ${scriptResource.getFile()!!.getAbsolutePath()}"
         val cl = CommandLine.parse(cmd)
         val exec = DefaultExecutor()
         exec.setWatchdog(ExecuteWatchdog(cfg.timeout))
@@ -70,7 +59,7 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
     private fun pickProperScript(scriptName: String): String {
         return when {
             scriptName.contains(".") -> scriptName
-            else -> scriptName + scriptPostfix
+            else -> scriptName + cfg.env.extension
         }
     }
 }

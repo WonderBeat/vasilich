@@ -16,7 +16,7 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
 
     val logger = LoggerFactory.getLogger(this.javaClass)!!;
 
-    private val orderedByPriority = commands.map {
+    private val commandsByPriority = commands.map {
             val order = when(it) {
                  is Ordered -> it.getOrder()
                  else -> defaultOrder
@@ -29,7 +29,8 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
     private fun makeReactive() {
         reactor.on(Selectors.`$`("receive-message"), Consumer<Event<String>> {
             val msg = it!!.getData()!!
-            val response = orderedByPriority.fold(null: String?,  // Chain of responsibility with fold
+            val response = commandsByPriority.fold(null: String?,  // Chain of responsibility with fold.
+            // Can you help me to simplify this?
                         { answer, command -> when {
                             answer == null -> command.execute(msg)
                             else -> answer
