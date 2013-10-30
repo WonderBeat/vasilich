@@ -2,7 +2,7 @@ package com.vasilich.commands
 
 import java.text.MessageFormat
 
-public class SimpleCfg(val enabled: Boolean = false,
+public class CommandCfg(val enabled: Boolean = false,
                        val aliases: Array<String> = array(),
                        val output: String = "")
 
@@ -12,16 +12,16 @@ object NoopCommand: Command {
     }
 }
 
-public fun and(one: (Command, SimpleCfg) -> Command,
-               two: (Command,SimpleCfg) -> Command):
-                            (Command,SimpleCfg) -> Command {
+public fun and(one: (Command, CommandCfg) -> Command,
+               two: (Command, CommandCfg) -> Command):
+                            (Command, CommandCfg) -> Command {
     return { cmd, cfg -> one(two(cmd, cfg), cfg)}
 }
 
 /**
  * Enable/Disable config functionality
  */
-public fun enableThumblerCommandWrapper(): (Command, SimpleCfg) -> Command {
+public fun enableThumblerCommandWrapper(): (Command, CommandCfg) -> Command {
     return { cmd, cfg ->
             when {
                 cfg.enabled -> cmd
@@ -33,7 +33,7 @@ public fun enableThumblerCommandWrapper(): (Command, SimpleCfg) -> Command {
 /**
  * Command will be triggered only if message contains one of aliases
  */
-public fun aliasMatchCommandDetection(): (Command, SimpleCfg) -> Command {
+public fun aliasMatchCommandDetection(): (Command, CommandCfg) -> Command {
     return { cmd, cfg ->
         object: Command {
         override fun execute(msg: String): String? {
@@ -50,7 +50,7 @@ public fun aliasMatchCommandDetection(): (Command, SimpleCfg) -> Command {
  * Formats output message
  * Based on configuration string
  */
-public fun outputMessageWrapper(): (Command, SimpleCfg) -> Command {
+public fun outputMessageWrapper(): (Command, CommandCfg) -> Command {
     return { cmd, cfg ->
         object: Command {
             override fun execute(msg: String): String? {

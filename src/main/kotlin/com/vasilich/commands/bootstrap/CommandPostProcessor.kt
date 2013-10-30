@@ -1,16 +1,15 @@
 package com.vasilich.commands
 
 import org.springframework.beans.factory.config.BeanPostProcessor
-import reactor.core.Observable
-import reactor.event.selector.Selectors
-import reactor.event.Event
-import reactor.function.Consumer
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 
 public class CommandPostProcessor (private val appCfg: JsonNode,
                                    private val mapper: ObjectMapper
-                                   private val wrapper: (Command,SimpleCfg) -> Command): BeanPostProcessor {
+                                   private val wrapper: (Command, CommandCfg) -> Command): BeanPostProcessor {
+
+    val logger = LoggerFactory.getLogger(javaClass<CommandPostProcessor>())!!;
 
     override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
         return bean
@@ -29,11 +28,11 @@ public class CommandPostProcessor (private val appCfg: JsonNode,
         return if(cfg == null) NoopCommand else wrapper(bean, cfg)
     }
 
-    private fun getCfg(beanName: String): SimpleCfg? {
+    private fun getCfg(beanName: String): CommandCfg? {
         val cfgNode = appCfg.get(beanName.toLowerCase().trimTrailing("command"))
         if(cfgNode == null) {
             return null
         }
-        return mapper.convertValue(cfgNode, javaClass<SimpleCfg>())!!
+        return mapper.convertValue(cfgNode, javaClass<CommandCfg>())!!
     }
 }
