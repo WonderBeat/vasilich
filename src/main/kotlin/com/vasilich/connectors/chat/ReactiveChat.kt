@@ -2,13 +2,14 @@ package com.vasilich.connectors.xmpp
 
 import reactor.event.Event
 import org.jivesoftware.smack.packet.Message
-import org.jivesoftware.smack.PacketListener
 import reactor.core.Observable
 import reactor.event.selector.Selectors
 import reactor.function.Consumer
 import com.vasilich.connectors.chat.Chat
+import reactor.core.composable.spec.Promises
+import java.util.concurrent.TimeUnit
 
-public class Topics(val send: String = "send-message", val receive: String = "recieve-message")
+public class Topics(val send: String = "send-message", val receive: String = "receive-message")
 
 /**
  * This class can be used to add reactive behaviour to Chat instance
@@ -21,7 +22,9 @@ public class ReactiveChat(private val chat: Chat<Message>,
             chat.send(it!!.getData()!!)
         })
 
-        chat.recieve { reactor.notify(topics.receive, Event.wrap(it.getBody())) }
+        chat.recieve {
+            reactor.notify(topics.receive, Event.wrap(it.getBody()))
+        }
     }
 
 }

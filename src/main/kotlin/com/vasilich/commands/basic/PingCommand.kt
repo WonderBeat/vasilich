@@ -6,12 +6,10 @@ import reactor.event.Event
 import reactor.spring.annotation.Selector
 import reactor.spring.annotation.ReplyTo
 import com.vasilich.config.Config
+import javax.annotation.PostConstruct
+import reactor.event.selector.Selectors
+import com.vasilich.connectors.xmpp.Topics
 import org.springframework.beans.factory.annotation.Autowired
-
-Component
-Config("ping")
-class PingCfg(val enabled: Boolean = false)
-
 
 /**
  *  General command example.
@@ -19,15 +17,10 @@ class PingCfg(val enabled: Boolean = false)
  *  Config will be read from file on startup
  */
 Component
-public class Ping [Autowired] (val reactor: Observable, val cfg: PingCfg) {
+public class Ping: Command {
 
-    Selector("recieve-message")
-    ReplyTo("send-message")
-    fun pong(msg: Event<String>): String? {
-        if(cfg.enabled && msg.getData()?.contains("ping") as Boolean) {
-            return "pong"
-        }
-        return null
+    override fun execute(msg: String): String? {
+        return "pong"
     }
 
 }

@@ -30,7 +30,7 @@ public class ChatTest() {
             promise.acceptEvent(it)
         })
         promise.compose()!!.onError(Consumer{ logger.error("Test failed", it) })
-        val response = promise.compose()!!.await(5, TimeUnit.SECONDS)
+        val response = promise.compose()!!.await(2, TimeUnit.SECONDS)
         matcher(response)
     }
 
@@ -50,7 +50,7 @@ public class ChatTest() {
         replyFor("Vasilich, what can you do?", {
             assert(it?.contains("abracadabra")!!,
                     "Vasilich should launch script and prints output") })
-        replyFor("Vasilich, wait", { assert(it == null,
-                    "Because NOTHING can stop Vasilich") })
+        replyFor("Vasilich, WTF?", { assert(it != null,
+                    "Vasilich is talkative. He should response ;)") })
     }
 }

@@ -1,6 +1,6 @@
 package com.vasilich.commands.examples
 
-import com.vasilich.commands.SimpleCommand
+import com.vasilich.commands.Command
 import org.springframework.stereotype.Component
 import com.vasilich.config.Config
 import org.apache.commons.exec.DefaultExecutor
@@ -19,7 +19,7 @@ public class ExecCgf(val scripts: Array<ExecUnit> = array(), val timeout: Long =
 public class ExecUnit(val aliases: Array<String> = array(), val script: String = "", val output: String = "")
 
 Component
-public class ExecCommand [Autowired] (private val cfg: ExecCgf): SimpleCommand {
+public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
 
     val osname = System.getProperty("os.name")!!.toLowerCase()
 

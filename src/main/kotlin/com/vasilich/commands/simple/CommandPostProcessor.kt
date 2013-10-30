@@ -8,38 +8,25 @@ import reactor.function.Consumer
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 
-public class SimpleCommandPostProcessor (val reactor: Observable,
-                                         private val appCfg: JsonNode,
-                                         private val mapper: ObjectMapper
-                                         private val wrapper: (SimpleCommand,
-                                                               SimpleCfg) -> SimpleCommand): BeanPostProcessor {
+public class CommandPostProcessor (private val appCfg: JsonNode,
+                                   private val mapper: ObjectMapper
+                                   private val wrapper: (Command,SimpleCfg) -> Command): BeanPostProcessor {
 
     override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
         return bean
     }
     override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? {
         return when(bean) {
-            is SimpleCommand -> {
+            is Command -> {
                 return init(bean)
             }
             else -> bean
         }
     }
 
-    private fun init(bean: SimpleCommand): SimpleCommand {
+    private fun init(bean: Command): Command {
         val cfg = getCfg(bean.javaClass.getSimpleName())
-        if(cfg == null || !cfg.enabled) {
-            return bean
-        }
-        val wrapped = wrapper(bean, cfg)
-        makeReactive(wrapped)
-        return wrapped
-    }
-
-    private fun makeReactive(bean: SimpleCommand) {
-        reactor.on(Selectors.`$`("recieve-message"), Consumer<Event<String>> {
-            reactor.notify("send-message", Event.wrap(bean.execute(it!!.getData()!!)))
-        })
+        return if(cfg == null) NoopCommand else wrapper(bean, cfg)
     }
 
     private fun getCfg(beanName: String): SimpleCfg? {

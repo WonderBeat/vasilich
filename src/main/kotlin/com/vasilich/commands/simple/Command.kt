@@ -1,7 +1,6 @@
 package com.vasilich.commands
 
 /**
- * Simple command example
  * Command accepts chat input message and should provide an answer (or 'null')
  * Simple configuration options are provided for simple command out of the box.
  * Example: 'enabled' - if command enabled,
@@ -14,6 +13,6 @@ package com.vasilich.commands
  *
  *
  */
-public trait SimpleCommand {
+public trait Command {
     fun execute(msg: String): String?
 }

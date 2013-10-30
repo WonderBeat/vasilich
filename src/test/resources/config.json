@@ -18,10 +18,15 @@
 	},
 
 	"ping": {
+		"aliases": ["ping"],
 		"enabled": true
 	},
 
-	"currenttime": {
+	"chatbot": {
+		"enabled": true
+	},
+
+	"datetime": {
 		"enabled": true,
 		"aliases": ["который час", "what time", "серверное время"],
 		"output": "Current time: {0}"

@@ -13,19 +13,21 @@ import org.springframework.core.io.ClassPathResource
 import com.vasilich.connectors.chat.Chat
 import com.vasilich.connectors.xmpp.XmppConf
 import com.vasilich.connectors.xmpp.ReactiveChat
-import reactor.core.Reactor
 import com.vasilich.connectors.chat.FilteredChat
 import com.vasilich.connectors.xmpp.createChat
 import org.jivesoftware.smack.packet.Message
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.beans.factory.config.BeanPostProcessor
-import com.vasilich.commands.SimpleCommandPostProcessor
-import com.vasilich.commands.and
+import com.vasilich.commands.CommandPostProcessor
 import com.vasilich.commands.aliasMatchCommandDetection
 import com.vasilich.commands.outputMessageWrapper
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.vasilich.commands.Command
+import com.vasilich.commands.simple.ReactiveCommandInitializer
+import com.vasilich.commands.enableThumblerCommandWrapper
+import com.vasilich.commands.and
 
-class CommunicationTopics(val send: String = "send-message", val receive: String = "recieve-message")
+class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
 Configuration
 EnableReactor
@@ -42,19 +44,22 @@ open public class AppContext {
         return mapper
     }
 
-    Bean open fun configReaderPostProcessor(Autowired appCfg: JsonNode,
-                                            Autowired objMapper: ObjectMapper): JsonBasedConfigPostProcessor {
+    Bean open fun configReaderPostProcessor(appCfg: JsonNode,
+                                            objMapper: ObjectMapper): JsonBasedConfigPostProcessor {
         return JsonBasedConfigPostProcessor(appCfg, objMapper)
     }
 
-    Bean open fun simpleCommandPostProcessor(Autowired reactor: Observable,
-                                            Autowired appCfg: JsonNode,
-                                            Autowired objMapper: ObjectMapper): BeanPostProcessor {
-        val wrappers = and(aliasMatchCommandDetection(), outputMessageWrapper())
-        return SimpleCommandPostProcessor(reactor, appCfg, objMapper, wrappers)
+    Bean open fun simpleCommandPostProcessor(appCfg: JsonNode, objMapper: ObjectMapper): BeanPostProcessor {
+        val wrappers = array(aliasMatchCommandDetection(), outputMessageWrapper())
+        return CommandPostProcessor(appCfg, objMapper,
+                wrappers.fold(enableThumblerCommandWrapper(), { one, another -> and(one, another) }))
     }
 
-    Bean open fun chat(Autowired cfg: XmppConf, Autowired reactor: Reactor): Chat<Message> {
+    Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
+        return ReactiveCommandInitializer(reactor, commands)
+    }
+
+    Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
         fun usernameInputMessageFilter(username: String): (Message) -> Boolean {
             return { (msg: Message) -> msg.getBody()!!.startsWith(username) }
         }
@@ -63,7 +68,7 @@ open public class AppContext {
     }
 
     Bean open fun rootReactor(env: Environment): Observable {
-        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 2))!!.get()!!;
+        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 10))!!.get()!!;
     }
 
 }
