@@ -20,7 +20,7 @@
         </encoder>
     </appender>
 
-    <logger name="net.borov" level="debug" additivity="false">
+    <logger name="com.vasilich" level="debug" additivity="false">
         <appender-ref ref="CONSOLE" />
     </logger>
 
