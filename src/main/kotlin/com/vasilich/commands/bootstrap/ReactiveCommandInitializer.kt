@@ -27,6 +27,7 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
 
     PostConstruct
     private fun makeReactive() {
+        logger.debug("Registered commands ${orderedByPriority.map { it.javaClass }}")
         reactor.on(Selectors.`$`("receive-message"), Consumer<Event<String>> {
             val msg = it!!.getData()!!
             val response = orderedByPriority.fold(null: String?,  // Chain of responsibility with fold
