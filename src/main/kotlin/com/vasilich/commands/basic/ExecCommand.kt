@@ -30,7 +30,7 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
 
     val scriptPrefix =  when {
         osname.contains("win") -> "cmd.exe /C "
-        else -> "/bin/bash "
+        else -> "bash -c"
     }
 
     override fun execute(msg: String): String? {
