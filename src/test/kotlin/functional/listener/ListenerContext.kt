@@ -22,10 +22,14 @@ class XmppLisenerCfg(val login: String = "", val password: String = "", val nick
 Configuration
 public open class ListenerContext {
 
-    Bean open fun chatListener(Autowired observable: Observable,
-                                 Autowired listenerCredentials: XmppLisenerCfg,
-                                 Autowired xmppCfg: XmppConf,
-                                 Autowired reactor: Reactor): ReactiveChat {
+    /**
+     * Michalich. Another bot, that will chat with Vasilich and asks everything about Vasilich knows ;)
+     * He will login into the same room, but with different nick
+     */
+    Bean open fun chatListener(observable: Observable,
+                               listenerCredentials: XmppLisenerCfg,
+                               xmppCfg: XmppConf,
+                               reactor: Reactor): ReactiveChat {
 
         val roomCfg = XmppRoomCfg(xmppCfg.room.id, listenerCredentials.nick, xmppCfg.room.password)
         val listenerConfig = XmppConf(xmppCfg.server, listenerCredentials.login,
@@ -38,6 +42,10 @@ public open class ListenerContext {
         return ReactiveChat(simpleChat, reactor, Topics("test-send", "test-recieve"))
     }
 
+    /**
+     * Let's randomize test room, because we don't want to interfere with another test executions, that
+     * could be launched the same time
+     */
     Bean open fun roomRandomizerPostProcessor(): BeanPostProcessor {
         return RoomRandomizerPostProcessor()
     }
