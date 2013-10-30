@@ -30,6 +30,7 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
         reactor.on(Selectors.`$`("receive-message"), Consumer<Event<String>> {
             val msg = it!!.getData()!!
             val responses = orderedByPriority.map { it.execute(msg) }.filterNotNull()
+            logger.debug("Responses: ${responses}")
             val response = responses.first
             if(response != null) {
                 logger.debug("Chat: ${msg} -> ${response}")
