@@ -8,7 +8,6 @@ import reactor.event.Event
 import reactor.function.Consumer
 import org.springframework.core.Ordered
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 
 public class ReactiveCommandInitializer [Autowired] (private val reactor: Observable,
                                                      commands: List<Command>,
@@ -29,9 +28,12 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
     private fun makeReactive() {
         reactor.on(Selectors.`$`("receive-message"), Consumer<Event<String>> {
             val msg = it!!.getData()!!
-            val responses = orderedByPriority.map { it.execute(msg) }.filterNotNull()
-            logger.debug("Responses: ${responses}")
-            val response = responses.first
+            val response = orderedByPriority.fold(null: String?,  // Chain of responsibility with fold
+                        { answer, command -> when {
+                            answer == null -> command.execute(msg)
+                            else -> answer
+                        }
+                    })
             if(response != null) {
                 logger.debug("Chat: ${msg} -> ${response}")
                 reactor.notify("send-message", Event.wrap(response))
