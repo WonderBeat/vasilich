@@ -8,6 +8,7 @@ import reactor.event.Event
 import reactor.function.Consumer
 import org.springframework.core.Ordered
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 
 public class ReactiveCommandInitializer [Autowired] (private val reactor: Observable,
                                                      commands: List<Command>,
