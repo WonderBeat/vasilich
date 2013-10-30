@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired
 
 Component
 Config("exec")
-public class ExecCgf(val scripts: Array<ExecUnit> = array(), val timeout: Long = 10000)
+public class ExecCgf(val run: String = "",
+                     val scripts: Array<ExecUnit> = array(),
+                     val timeout: Long = 10000)
 
 public class ExecUnit(val aliases: Array<String> = array(), val script: String = "", val output: String = "")
 
@@ -29,8 +31,9 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
     }
 
     val scriptPrefix =  when {
+        !cfg.run.isEmpty() -> cfg.run
         osname.contains("win") -> "cmd.exe /C "
-        else -> "bash -c"
+        else -> "bash -c "
     }
 
     override fun execute(msg: String): String? {
