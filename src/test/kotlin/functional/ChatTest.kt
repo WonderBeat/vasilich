@@ -23,34 +23,28 @@ public class ChatTest() {
 
     val logger = LoggerFactory.getLogger(this.javaClass)!!;
 
-    fun replyFor(msg: String, matcher: (reply: String?) -> Unit ) {
+    fun replyFor(msg: String, matcher: (reply: String?) -> Boolean, description: String) {
         tester!!.notify("test-send", Event.wrap(msg))
         val promise = Promises.defer<String>()!!.get()!!
         tester!!.on(Selectors.`$`("test-recieve"), Consumer<Event<String>> {
             promise.acceptEvent(it)
         })
         promise.compose()!!.onError(Consumer{ logger.error("Test failed", it) })
-        val response = promise.compose()!!.await(10, TimeUnit.SECONDS)
-        matcher(response)
-    }
 
+        val response = promise.compose()!!.await(3, TimeUnit.SECONDS)
+        assert(matcher(response), description)
+    }
     /**
      * Integration test. Real chat between Michalich and Vasilich
      */
     Test fun testConfigExtraction() {
-        replyFor("Vasilich, ping", {
-            assert(it == "pong",
-                    "Ping command should recieve a reply") })
-        replyFor("Vasilich, what time is it?", {
-            assert(it?.startsWith("Current time")!!,
-                    "Vasilich should reply with current server time") })
-        replyFor("Vasilich, what's your uptime?", {
-            assert(it?.startsWith("Oh, long enough")!! && it!!.length > 20,
-                    "Vasilich should launch script and prints output") })
-        replyFor("Vasilich, what can you do?", {
-            assert(it?.contains("abracadabra")!!,
-                    "Vasilich should launch script and prints output") })
-        replyFor("Vasilich, WTF?", { assert(it != null,
-                    "Vasilich is talkative. He should response ;)") })
+        replyFor("Vasilich, ping", { it == "pong" }, "Ping command should recieve a reply")
+        replyFor("Vasilich, what time is it?", { it?.startsWith("Current time")!! },
+                    "Vasilich should reply with current server time")
+        replyFor("Vasilich, what's your uptime?", { it?.startsWith("Oh, long enough")!! && it!!.length > 20 },
+                    "Vasilich should launch script and prints output")
+        replyFor("Vasilich, what can you do?", { it?.contains("abracadabra")!! },
+                    "Vasilich should launch script and prints output")
+        replyFor("Vasilich, WTF?", { it != null }, "Vasilich is talkative. He should response ;)")
     }
 }
