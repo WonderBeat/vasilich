@@ -1,16 +1,7 @@
 package com.vasilich.commands
 
 import java.text.MessageFormat
-
-public class CommandCfg(val enabled: Boolean = false,
-                       val aliases: Array<String> = array(),
-                       val output: String = "")
-
-object NoopCommand: Command {
-    override fun execute(msg: String): String? {
-        return null
-    }
-}
+import com.vasilich.commands.api.NoopCommand
 
 public fun and(one: (Command, CommandCfg) -> Command,
                two: (Command, CommandCfg) -> Command):
@@ -36,12 +27,9 @@ public fun enableThumblerCommandWrapper(): (Command, CommandCfg) -> Command {
 public fun aliasMatchCommandDetection(): (Command, CommandCfg) -> Command {
     return { cmd, cfg ->
         object: Command {
-        override fun execute(msg: String): String? {
-            if(cfg.aliases.isEmpty() || cfg.aliases.any { msg.contains(it) }) {
-                return cmd.execute(msg)
-            } else {
-                return null
-            }
+        override fun execute(msg: String): String? = when {
+            cfg.aliases.isEmpty() || cfg.aliases.any { msg.contains(it) } -> cmd.execute(msg)
+            else -> null
         }
     }}
 }
@@ -53,12 +41,24 @@ public fun aliasMatchCommandDetection(): (Command, CommandCfg) -> Command {
 public fun outputMessageWrapper(): (Command, CommandCfg) -> Command {
     return { cmd, cfg ->
         object: Command {
+            override fun execute(msg: String): String? = when {
+                !cfg.output.isEmpty() -> MessageFormat.format(cfg.output, cmd.execute(msg))
+                else -> cmd.execute(msg)
+                }
+        }}
+}
+
+/**
+ * If first command doesn't resolve, then triggers another one
+ */
+public fun chainCommands(one: Command, another: Command): Command {
+    return object: Command {
             override fun execute(msg: String): String? {
-                if(!cfg.output.isEmpty()) {
-                    return MessageFormat.format(cfg.output, cmd.execute(msg))
-                } else {
-                    return cmd.execute(msg)
+                val result = one.execute(msg)
+                when(result) {
+                    null -> another.execute(msg)
+                    else -> result
                 }
             }
-        }}
+    }
 }

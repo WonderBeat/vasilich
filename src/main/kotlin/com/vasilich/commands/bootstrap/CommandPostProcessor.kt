@@ -3,6 +3,11 @@ package com.vasilich.commands
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.slf4j.LoggerFactory
 import com.vasilich.config.CommandConfigResolver
+import com.vasilich.commands.api.NoopCommand
+
+public class CommandCfg(val enabled: Boolean = false,
+                        val aliases: Array<String> = array(),
+                        val output: String = "")
 
 public class CommandPostProcessor (private val cfgProvider: CommandConfigResolver,
                                    private val wrapper: (Command, CommandCfg) -> Command): BeanPostProcessor {
