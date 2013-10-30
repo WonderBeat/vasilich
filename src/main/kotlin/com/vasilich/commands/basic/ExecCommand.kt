@@ -40,12 +40,11 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf): Command {
     }
 
     override fun execute(msg: String): String? {
-        logger.debug("Exec command")
         val scriptUnit = cfg.scripts.find { it.aliases.any { msg.contains(it) } }
         if(scriptUnit == null) {
             return null
         }
-        logger.debug("Will exec: ${scriptUnit}")
+        logger.debug("Exec cmd: ${scriptUnit.script}")
         return MessageFormat.format(scriptUnit.output, executeScript(scriptUnit.script))
     }
 
