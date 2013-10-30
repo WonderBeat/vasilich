@@ -26,6 +26,7 @@ import com.vasilich.commands.Command
 import com.vasilich.commands.simple.ReactiveCommandInitializer
 import com.vasilich.commands.enableThumblerCommandWrapper
 import com.vasilich.commands.and
+import com.vasilich.config.CommandConfigResolver
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -49,9 +50,14 @@ open public class AppContext {
         return JsonBasedConfigPostProcessor(appCfg, objMapper)
     }
 
-    Bean open fun simpleCommandPostProcessor(appCfg: JsonNode, objMapper: ObjectMapper): BeanPostProcessor {
+    Bean open fun configResolver(appCfg: JsonNode,
+                                 mapper: ObjectMapper): CommandConfigResolver {
+        return CommandConfigResolver(appCfg, mapper)
+    }
+
+    Bean open fun simpleCommandPostProcessor(configResolver: CommandConfigResolver): BeanPostProcessor {
         val wrappers = array(aliasMatchCommandDetection(), outputMessageWrapper())
-        return CommandPostProcessor(appCfg, objMapper,
+        return CommandPostProcessor(configResolver,
                 wrappers.fold(enableThumblerCommandWrapper(), { one, another -> and(one, another) }))
     }
 
