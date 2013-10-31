@@ -1,7 +1,8 @@
-package com.vasilich.commands
+package com.vasilich.commands.basic
 
 import java.util.Date
 import org.springframework.stereotype.Component
+import com.vasilich.commands.api.Command
 
 Component
 public class DateTimeCommand : Command {

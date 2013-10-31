@@ -1,9 +1,9 @@
-package com.vasilich.commands.examples
+package com.vasilich.commands.basic
 
-import com.vasilich.commands.Command
 import org.springframework.stereotype.Component
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.vasilich.commands.api.Command
 import org.springframework.beans.factory.annotation.Autowired
 
 /**

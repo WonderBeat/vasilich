@@ -1,7 +1,8 @@
-package com.vasilich.commands
+package com.vasilich.commands.bootstrap
 
 import java.text.MessageFormat
 import com.vasilich.commands.api.NoopCommand
+import com.vasilich.commands.api.Command
 
 public fun and(one: (Command, CommandCfg) -> Command,
                two: (Command, CommandCfg) -> Command):

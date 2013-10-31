@@ -1,9 +1,10 @@
-package com.vasilich.commands
+package com.vasilich.commands.bootstrap
 
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.slf4j.LoggerFactory
 import com.vasilich.config.CommandConfigResolver
 import com.vasilich.commands.api.NoopCommand
+import com.vasilich.commands.api.Command
 
 public class CommandCfg(val enabled: Boolean = false,
                         val aliases: Array<String> = array(),

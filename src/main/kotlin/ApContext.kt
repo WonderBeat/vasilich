@@ -18,15 +18,15 @@ import com.vasilich.connectors.xmpp.createChat
 import org.jivesoftware.smack.packet.Message
 import com.fasterxml.jackson.databind.JsonNode
 import org.springframework.beans.factory.config.BeanPostProcessor
-import com.vasilich.commands.CommandPostProcessor
-import com.vasilich.commands.aliasMatchCommandDetection
-import com.vasilich.commands.outputMessageWrapper
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.vasilich.commands.Command
-import com.vasilich.commands.simple.ReactiveCommandInitializer
-import com.vasilich.commands.enableThumblerCommandWrapper
-import com.vasilich.commands.and
 import com.vasilich.config.CommandConfigResolver
+import com.vasilich.commands.bootstrap.enableThumblerCommandWrapper
+import com.vasilich.commands.bootstrap.ReactiveCommandInitializer
+import com.vasilich.commands.api.Command
+import com.vasilich.commands.bootstrap.CommandPostProcessor
+import com.vasilich.commands.bootstrap.outputMessageWrapper
+import com.vasilich.commands.bootstrap.and
+import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 

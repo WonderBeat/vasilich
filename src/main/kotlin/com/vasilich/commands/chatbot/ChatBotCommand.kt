@@ -1,8 +1,8 @@
 package com.vasilich.commands.chatbot
 
 import org.springframework.stereotype.Component
-import com.vasilich.commands.Command
 import org.springframework.core.Ordered
+import com.vasilich.commands.api.Command
 
 Component
 public class ChatBotCommand: Command, Ordered {

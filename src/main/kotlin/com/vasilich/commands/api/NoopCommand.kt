@@ -1,7 +1,5 @@
 package com.vasilich.commands.api
 
-import com.vasilich.commands.Command
-
 /**
  * Empty command
  */

@@ -1,6 +1,5 @@
-package com.vasilich.commands.examples
+package com.vasilich.commands.basic.exec
 
-import com.vasilich.commands.Command
 import org.springframework.stereotype.Component
 import com.vasilich.config.Config
 import org.apache.commons.exec.DefaultExecutor
@@ -11,9 +10,8 @@ import org.apache.commons.exec.ExecuteWatchdog
 import java.text.MessageFormat
 import org.springframework.core.io.FileSystemResource
 import org.slf4j.LoggerFactory
-import com.vasilich.commands.basic.exec.ExecutionEnv
+import com.vasilich.commands.api.Command
 import org.springframework.beans.factory.annotation.Autowired
-import com.vasilich.commands.basic.exec.OsDetails
 
 Component
 Config("exec")

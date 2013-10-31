@@ -18,8 +18,8 @@
 	},
 
 	"ping": {
-		"aliases": ["ping"],
-		"enabled": true
+		"enabled": true,
+		"aliases": ["ping"]
 	},
 
 	"chatbot": {

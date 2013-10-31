@@ -1,15 +1,7 @@
-package com.vasilich.commands
+package com.vasilich.commands.basic
 
 import org.springframework.stereotype.Component
-import reactor.core.Observable
-import reactor.event.Event
-import reactor.spring.annotation.Selector
-import reactor.spring.annotation.ReplyTo
-import com.vasilich.config.Config
-import javax.annotation.PostConstruct
-import reactor.event.selector.Selectors
-import com.vasilich.connectors.xmpp.Topics
-import org.springframework.beans.factory.annotation.Autowired
+import com.vasilich.commands.api.Command
 
 /**
  *  General command example.

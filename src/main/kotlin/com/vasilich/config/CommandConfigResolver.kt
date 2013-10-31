@@ -2,8 +2,7 @@ package com.vasilich.config
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.vasilich.commands.CommandCfg
-import org.springframework.stereotype.Component
+import com.vasilich.commands.bootstrap.CommandCfg
 import org.springframework.beans.factory.annotation.Autowired
 
 /**

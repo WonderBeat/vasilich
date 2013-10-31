@@ -1,4 +1,4 @@
-package com.vasilich.commands
+package com.vasilich.commands.api
 
 /**
  * Command accepts chat input message and should provide an answer (or 'null')
