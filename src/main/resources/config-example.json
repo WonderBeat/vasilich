@@ -12,11 +12,10 @@
 	},
 
 	"ping": {
-		"enabled": false
+		"aliases": ["ping"]
 	},
 
 	"currenttime": {
-		"enabled": true,
 		"aliases": ["который час", "time", "what time", "серверное время"],
 		"output": "Время: {0}"
 	}

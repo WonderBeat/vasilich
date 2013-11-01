@@ -18,22 +18,18 @@
 	},
 
 	"ping": {
-		"enabled": true,
 		"aliases": ["ping"]
 	},
 
 	"chatbot": {
-		"enabled": true
 	},
 
 	"datetime": {
-		"enabled": true,
 		"aliases": ["который час", "what time", "серверное время"],
 		"output": "Current time: {0}"
 	},
 
 	"exec": {
-		"enabled": true,
 		"scripts": [
 			{
 				"aliases": ["давно работаешь", "your uptime"],
@@ -45,7 +41,6 @@
 	},
 
 	"info": {
-		"enabled": true,
 		"aliases": ["can you do", "help"]
 	}
 

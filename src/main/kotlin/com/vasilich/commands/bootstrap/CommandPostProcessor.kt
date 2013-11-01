@@ -6,7 +6,7 @@ import com.vasilich.config.CommandConfigResolver
 import com.vasilich.commands.api.NoopCommand
 import com.vasilich.commands.api.Command
 
-public class CommandCfg(val enabled: Boolean = false,
+public class CommandCfg(val enabled: Boolean = true,
                         val aliases: Array<String> = array(),
                         val output: String = "")
 
