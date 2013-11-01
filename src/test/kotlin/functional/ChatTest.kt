@@ -45,6 +45,9 @@ public class ChatTest() {
                     "Vasilich should launch script and prints output")
         replyFor("Vasilich, what can you do?", { it?.contains("abracadabra")!! },
                     "Vasilich should launch script and prints output")
+        replyFor("Vasilich, there was a verbose script. Please, launch it and print output",
+                { it?.contains("Invisible exception occurs")!! },
+                "Vasilich should launch script and prints output during script execution")
         replyFor("Vasilich, WTF?", { it != null }, "Vasilich is talkative. He should response ;)")
     }
 }

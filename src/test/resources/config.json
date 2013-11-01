@@ -35,6 +35,10 @@
 				"aliases": ["давно работаешь", "your uptime"],
 				"script": "src/test/resources/uptime",
 				"output": "Oh, long enough: {0}"
+			},
+			{
+				"aliases": ["verbose script"],
+				"script": "src/test/resources/progress"
 			}
 		],
 		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"

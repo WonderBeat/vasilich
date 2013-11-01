@@ -27,6 +27,9 @@ import com.vasilich.commands.bootstrap.CommandPostProcessor
 import com.vasilich.commands.bootstrap.outputMessageWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
+import com.vasilich.commands.basic.exec.ShellCommandExecutor
+import com.vasilich.commands.basic.exec.VerboseExecuteCfg
+import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -63,6 +66,10 @@ open public class AppContext {
 
     Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
         return ReactiveCommandInitializer(reactor, commands)
+    }
+
+    Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
+        return VerboseShellCommandExecutor(reactor = reactor, cfg = cfg)
     }
 
     Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
