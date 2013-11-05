@@ -11,6 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired
 
 public class XmppRoomCfg(val id: String = "", val username: String = "", val password: String = "")
 
+
+/**
+ * XMPP chat implementation.
+ * Creates connection and enters chat room
+ */
 Component
 Config("xmpp")
 public class XmppConf(val server: String = "",
