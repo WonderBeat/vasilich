@@ -7,6 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Provides CommandCfg object for node
+ * Example:
+ * {
+ *  'ping': {
+ *          alias: pong,
+ *          data: 1
+ *      }
+ * }
+ * Resolver tries to convert this node into CommandCfg object
  */
 public class CommandConfigResolver [Autowired] (private val appCfg: JsonNode,
                                    private val mapper: ObjectMapper) {
