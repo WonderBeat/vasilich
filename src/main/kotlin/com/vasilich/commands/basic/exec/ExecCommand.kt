@@ -27,8 +27,7 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf, private val shel
         if(scriptUnit == null) {
             return null
         }
-        val script = pickProperScript(scriptUnit.script)
-        val scriptResource = FileSystemResource(script)
+        val scriptResource = FileSystemResource(pickProperScript(scriptUnit.script))
         val cmd = "${cfg.env.shell} ${scriptResource.getFile()!!.getAbsolutePath()}"
         logger.debug("Exec cmd: ${cmd}")
         val output = MessageFormat.format(scriptUnit.output, shell.exec(cmd, cfg.timeout))
@@ -40,11 +39,9 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf, private val shel
      * bat - Windows,
      * sh - Linux
      */
-    private fun pickProperScript(scriptName: String): String {
-        return when {
+    private fun pickProperScript(scriptName: String): String = when {
             scriptName.contains(".") -> scriptName
             else -> scriptName + cfg.env.extension
         }
-    }
 
 }
