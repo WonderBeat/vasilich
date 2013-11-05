@@ -17,7 +17,7 @@ import reactor.event.Event
 
 Component
 Config("exec")
-public class VerboseExecuteCfg(val notify: Array<String> = array("VSLC: "), val discrete: Long = 800)
+public class VerboseExecuteCfg(val marker: Array<String> = array("VSLC: "), val discrete: Long = 800)
 
 
 /**
@@ -25,7 +25,7 @@ public class VerboseExecuteCfg(val notify: Array<String> = array("VSLC: "), val 
  * Need to find a replacement
  * https://issues.apache.org/jira/browse/EXEC-49
  */
-class PumpStreamHandlerFix(out: OutputStream): PumpStreamHandler(out) {
+class PumpStreamHandlerFixed(out: OutputStream): PumpStreamHandler(out) {
 
     override protected fun createPump(`is`: InputStream?, os: OutputStream?): Thread? {
         return createPump(`is`, os, true);
@@ -40,38 +40,25 @@ class PumpStreamHandlerFix(out: OutputStream): PumpStreamHandler(out) {
  * @author Denis Golovachev
  */
 public class VerboseShellCommandExecutor(private val reactor: Observable,
+                                         private val cfg: VerboseExecuteCfg,
                                          private val topics: Topics = Topics(),
-                                         private val cfg: VerboseExecuteCfg): ShellCommandExecutor {
+                                         private val processMonitor: (String) -> Unit = {}): ShellCommandExecutor {
 
     override fun exec(cmd: String, timeout: Long): String {
         val stdout = PipedInputStream()
-        val pipedStdout = PipedOutputStream(stdout)
-        val psh = PumpStreamHandlerFix(pipedStdout)
-        val command = CommandLine.parse(cmd)
-        val exec = DefaultExecutor()
+        val psh = PumpStreamHandlerFixed(PipedOutputStream(stdout))
         val resultHandler = DefaultExecuteResultHandler()
+        val exec = DefaultExecutor()
         exec.setWatchdog(ExecuteWatchdog(timeout))
         exec.setStreamHandler(psh)
-        exec.execute(command, resultHandler)
+        exec.execute(CommandLine.parse(cmd), resultHandler)
         val output = linkedListOf<String>()
         do {
             resultHandler.waitFor(cfg.discrete)
             val outputPortion = stdout.reader("UTF-8").readText()
             output add outputPortion
-            notifyAboutProgress(outputPortion)
+            processMonitor(outputPortion)
         } while(!resultHandler.hasResult())
         return output.reduce { a, b -> a + b }
     }
-
-    private fun notifyAboutProgress(output: String) {
-        output.replace("\\r", "").split("\\n").forEach { line ->
-            val marker = cfg.notify.find { line.contains(it) }
-            if(marker != null) {
-                val withoutNotificationMarkers = line.substring(line.indexOf(marker) + marker.length).replace("\n", "").replace("\r", "")
-                reactor.notify(topics.send, Event.wrap(withoutNotificationMarkers))
-            }
-        }
-    }
-
-
 }

@@ -30,6 +30,7 @@ import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
 import com.vasilich.commands.basic.exec.ShellCommandExecutor
 import com.vasilich.commands.basic.exec.VerboseExecuteCfg
 import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
+import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -69,7 +70,8 @@ open public class AppContext {
     }
 
     Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
-        return VerboseShellCommandExecutor(reactor = reactor, cfg = cfg)
+        return VerboseShellCommandExecutor(reactor = reactor, cfg = cfg,
+                processMonitor = createMarkerBasedNotificator(cfg.marker, reactor))
     }
 
     Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
