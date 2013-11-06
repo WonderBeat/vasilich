@@ -17,3 +17,12 @@ Chat Bot. Can help you with deploy, monitoring and alerting.
 
 # Vasilich and Travis
 [![Build Status](https://travis-ci.org/WonderBeat/vasilich.png?branch=master)](https://travis-ci.org/WonderBeat/vasilich)
+
+# Hackaton RoadMap
+- [ ] Istall & Setup
+- [ ] Hello, Vasilich!
+- [ ] Live talk module integration
+- [ ] Script execution (echo + sleep). Generic funtionality.
+- [ ] Monitoring ops (disk space usage, cpu usage, proc #, thread #, etc.)
+- [ ] Alerting (e.g. disk space < 500 MB)
+- [ ] View logs in chat - "give last N ERRORs"
