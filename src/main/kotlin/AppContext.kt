@@ -33,6 +33,10 @@ import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
 import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
+import com.vasilich.commands.chatbot.ChatBotCommand
+import com.vasilich.commands.chatbot.loadAimsFromClasspath
+import com.vasilich.commands.chatbot.ChatBotLoader
+import java.io.ByteArrayOutputStream
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -91,6 +95,20 @@ open public class AppContext {
 
     Bean open fun rootReactor(env: Environment): Observable {
         return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 10))!!.get()!!;
+    }
+
+    Bean open fun chatBot(): ChatBotCommand {
+        val aimlResources = loadAimsFromClasspath("/Bots/Alice/")
+        val bot = ChatBotLoader.createBot(
+                ClassPathResource("/Bots/context.xml").getInputStream(),
+                ClassPathResource("/Bots/splitters.xml").getInputStream(),
+                ClassPathResource("/Bots/substitutions.xml").getInputStream(), aimlResources)
+        val context = bot!!.getContext();
+        val gossip = ByteArrayOutputStream()
+        context!!.outputStream(gossip);
+
+
+        return ChatBotCommand(bot)
     }
 
 }
