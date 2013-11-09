@@ -68,6 +68,14 @@
 
 	"info": {
 		"aliases": ["can you do", "help"]
-	}
+	},
+
+    "basic-talk": {
+        "knowledge" : {
+            "Hello" : ["Hi", "Good morning", "Hello"],
+            "Bye, see you" : ["Chao", "Bye"],
+            "EPAM St.Petersburg" : ["In what office you was created?", "Do you know any good IT place to work in Spb?"]
+        }
+    }
 
 }
