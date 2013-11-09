@@ -13,7 +13,7 @@ import com.vasilich.webhook.processors.createNotificationProcessor
 
 Component
 Config("webhook")
-public class WebhookCfg(val enabled: Boolean = true,
+public class WebhookCfg(val enabled: Boolean = false,
                         val port: Int = -1, val address: String = "",
                         val commands: Array<WebhookCommand> = array())
 

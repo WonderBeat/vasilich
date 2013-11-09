@@ -11,6 +11,28 @@
 		}
 	},
 
+    "webhook": {
+        "port": 9000,
+        "address": "0.0.0.0",
+        "commands": [
+            {
+                "conditions": {
+                    "SpecialHeader": "(.+)[^\n]",
+                    "body": "success"
+                },
+                "trigger": "What time is it?",
+                "notify": "\"{0}\" has pushed a new commit to the repository"
+            },
+            {
+                "conditions": {
+                    "body": "\buser: \b(.+)",
+                    "User-Agent": "Chrome"
+                },
+                "notify": "Central repository updated: \"{0}\""
+            }
+        ]
+    },
+
 	"ping": {
 		"aliases": ["ping"]
 	},
@@ -18,5 +40,16 @@
 	"date-time": {
 		"aliases": ["который час", "time", "what time", "серверное время"],
 		"output": "Время: {0}"
-	}
+	},
+
+    "basic-talk": {
+        "knowledge" : {
+            "Hello" : ["Hi", "Good morning", "Hello"],
+            "Bye, see you" : ["Chao", "Bye"],
+            "EPAM St.Petersburg" : ["In what office you was created?", "Do you know any good IT place to work in Spb?"]
+        }
+    },
+
+    "chatbot": {
+    }
 }
