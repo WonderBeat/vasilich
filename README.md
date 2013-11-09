@@ -27,3 +27,10 @@ Chat Bot. Can help you with deploy, monitoring and alerting.
 - [ ] Alerting (e.g. disk space < 500 MB)
 - [?] View logs in chat - "give last N ERRORs"
 - [ ] Presentation
+
+# Why Vasilich?
+1. Open Source - Join us on GitHup
+2. Easy to Use - Just chat
+3. Easy to Setup - 1 jar, 1 configuration file
+4. Flexible - script execution Module
+5. Many ways to grow up
