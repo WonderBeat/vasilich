@@ -24,7 +24,7 @@
 	"chatbot": {
 	},
 
-	"datetime": {
+	"date-time": {
 		"aliases": ["который час", "what time", "серверное время"],
 		"output": "Current time: {0}"
 	},
