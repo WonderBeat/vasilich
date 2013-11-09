@@ -10,6 +10,14 @@ public class CommandCfg(val enabled: Boolean = true,
                         val aliases: Array<String> = array(),
                         val output: String = "")
 
+fun getNodeName(input: String) : String =
+    input.fold("", { akk, data -> when {
+        akk.isEmpty() -> akk + data.toString().toLowerCase()
+        data.isUpperCase() -> akk + "-" + data.toString().toLowerCase()
+        else -> akk + data
+    }
+})
+
 public class CommandPostProcessor (private val cfgProvider: CommandConfigResolver,
                                    private val wrapper: (Command, CommandCfg) -> Command): BeanPostProcessor {
 
@@ -18,13 +26,14 @@ public class CommandPostProcessor (private val cfgProvider: CommandConfigResolve
     override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
         return bean
     }
+
     override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? = when(bean) {
         is Command -> init(bean)
         else -> bean
     }
 
     private fun init(bean: Command): Command {
-        val cfg = cfgProvider.config(bean.javaClass.getSimpleName().toLowerCase().trimTrailing("command"))
+        val cfg = cfgProvider.config(getNodeName(bean.javaClass.getSimpleName().trimTrailing("Command")));
         return if(cfg == null) NoopCommand else wrapper(bean, cfg)
     }
 }

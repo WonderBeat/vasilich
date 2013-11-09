@@ -19,10 +19,18 @@ Chat Bot. Can help you with deploy, monitoring and alerting.
 [![Build Status](https://travis-ci.org/WonderBeat/vasilich.png?branch=master)](https://travis-ci.org/WonderBeat/vasilich)
 
 # Hackaton RoadMap
-- [ ] Istall & Setup
-- [ ] Hello, Vasilich!
+- [X] Install & Setup
+- [X] Hello, Vasilich! - Basic Talk module
 - [ ] Live talk module integration
-- [ ] Script execution (echo + sleep). Generic funtionality.
+- [X] Script execution (echo + sleep). Generic functionality.
 - [ ] Monitoring ops (disk space usage, cpu usage, proc #, thread #, etc.)
 - [ ] Alerting (e.g. disk space < 500 MB)
-- [ ] View logs in chat - "give last N ERRORs"
+- [?] View logs in chat - "give last N ERRORs"
+- [ ] Presentation
+
+# Why Vasilich?
+1. Open Source - join us on GitHup
+2. Easy to Use - just chat
+3. Easy to Setup - 1 jar, 1 configuration file
+4. Flexible - script execution Module
+5. Many ways to grow up

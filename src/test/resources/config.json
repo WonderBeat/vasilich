@@ -10,16 +10,25 @@
 			"password": "tapcat.net"
 		}
 	},
+
 	"listener": {
 		"login": "michalich",
 		"password": "11001011100101",
 		"nick": "Michalich"
 	},
+
 	"ping": {
 		"aliases": ["ping"]
 	},
+
 	"chatbot": {
 	},
+
+	"date-time": {
+        "aliases": ["который час", "what time", "серверное время"],
+        "output": "Current time: {0}"
+    },
+    
 	"webhook": {
 		"port": 9000,
 		"address": "0.0.0.0",
@@ -41,10 +50,7 @@
 			}
 		]
 	},
-	"datetime": {
-		"aliases": ["который час", "what time", "серверное время"],
-		"output": "Current time: {0}"
-	},
+
 	"exec": {
 		"scripts": [
 			{
@@ -59,7 +65,17 @@
 		],
 		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"
 	},
+
 	"info": {
 		"aliases": ["can you do", "help"]
-	}
+	},
+
+    "basic-talk": {
+        "knowledge" : {
+            "Hello" : ["Hi", "Good morning", "Hello"],
+            "Bye, see you" : ["Chao", "Bye"],
+            "EPAM St.Petersburg" : ["In what office you was created?", "Do you know any good IT place to work in Spb?"]
+        }
+    }
+
 }
