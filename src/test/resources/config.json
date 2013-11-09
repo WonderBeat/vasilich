@@ -10,25 +10,41 @@
 			"password": "tapcat.net"
 		}
 	},
-
 	"listener": {
-		"login": "test-vasilich",
-		"password": "1234512345",
+		"login": "michalich",
+		"password": "11001011100101",
 		"nick": "Michalich"
 	},
-
 	"ping": {
 		"aliases": ["ping"]
 	},
-
 	"chatbot": {
 	},
-
+	"webhook": {
+		"port": 9000,
+		"address": "0.0.0.0",
+		"commands": [
+			{
+				"conditions": {
+					"SpecialHeader": "(.+)[^\n]",
+					"body": "success"
+				},
+				"trigger": "What time is it?",
+				"notify": "\"{0}\" has pushed a new commit to the repository"
+			},
+			{
+				"conditions": {
+					"body": "\buser: \b(.+)",
+					"User-Agent": "Chrome"
+				},
+				"notify": "Central repository updated: \"{0}\""
+			}
+		]
+	},
 	"datetime": {
 		"aliases": ["который час", "what time", "серверное время"],
 		"output": "Current time: {0}"
 	},
-
 	"exec": {
 		"scripts": [
 			{
@@ -39,9 +55,7 @@
 		],
 		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"
 	},
-
 	"info": {
 		"aliases": ["can you do", "help"]
 	}
-
 }

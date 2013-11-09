@@ -37,7 +37,7 @@ public class ChatTest() {
     /**
      * Integration test. Real chat between Michalich and Vasilich
      */
-    Test fun testConfigExtraction() {
+    Test fun chatTest() {
         replyFor("Vasilich, ping", { it == "pong" }, "Ping command should recieve a reply")
         replyFor("Vasilich, what time is it?", { it?.startsWith("Current time")!! },
                     "Vasilich should reply with current server time")

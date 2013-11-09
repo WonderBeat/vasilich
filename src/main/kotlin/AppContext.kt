@@ -32,7 +32,7 @@ class CommunicationTopics(val send: String = "send-message", val receive: String
 
 Configuration
 EnableReactor
-ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors.xmpp"))
+ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors.xmpp", "com.vasilich.webhook"))
 open public class AppContext {
 
     Bean open fun appConfig(Autowired mapper: ObjectMapper): JsonNode {
