@@ -25,8 +25,30 @@
 	},
 
 	"date-time": {
-		"aliases": ["который час", "what time", "серверное время"],
-		"output": "Current time: {0}"
+        "aliases": ["который час", "what time", "серверное время"],
+        "output": "Current time: {0}"
+    },
+    
+	"webhook": {
+		"port": 9000,
+		"address": "0.0.0.0",
+		"commands": [
+			{
+				"conditions": {
+					"SpecialHeader": "(.+)[^\n]",
+					"body": "success"
+				},
+				"trigger": "What time is it?",
+				"notify": "\"{0}\" has pushed a new commit to the repository"
+			},
+			{
+				"conditions": {
+					"body": "\buser: \b(.+)",
+					"User-Agent": "Chrome"
+				},
+				"notify": "Central repository updated: \"{0}\""
+			}
+		]
 	},
 
 	"exec": {
