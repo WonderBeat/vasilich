@@ -29,8 +29,8 @@ Chat Bot. Can help you with deploy, monitoring and alerting.
 - [ ] Presentation
 
 # Why Vasilich?
-1. Open Source - Join us on GitHup
-2. Easy to Use - Just chat
+1. Open Source - join us on GitHup
+2. Easy to Use - just chat
 3. Easy to Setup - 1 jar, 1 configuration file
 4. Flexible - script execution Module
 5. Many ways to grow up
