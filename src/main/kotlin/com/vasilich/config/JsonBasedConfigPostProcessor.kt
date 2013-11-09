@@ -14,6 +14,8 @@ Retention(RetentionPolicy.RUNTIME) annotation class Config(val value: String)
 /**
  * Provides configuration beans
  * Works for "Config" annotated classes
+ *
+ * Env object, that are instances of "@Config" annotated class will be replaced with filled once if config node is found
  */
 public class JsonBasedConfigPostProcessor(private val appCfg: JsonNode,
                                  private val jsonMapper: ObjectMapper): BeanPostProcessor, PriorityOrdered {

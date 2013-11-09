@@ -15,7 +15,8 @@ public class InfoCommand [Autowired] (config: ObjectNode, mapper: ObjectMapper):
     /**
      * All "descriptions" values from the second layer of config file
      * Example {
-     *   one: {
+     *   ping: {
+     *      alias: ["ping"]
      *      description: "This text will be grabbed"
      *   }
      * }

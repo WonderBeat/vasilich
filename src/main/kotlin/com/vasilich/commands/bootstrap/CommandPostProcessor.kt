@@ -18,13 +18,9 @@ public class CommandPostProcessor (private val cfgProvider: CommandConfigResolve
     override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
         return bean
     }
-    override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? {
-        return when(bean) {
-            is Command -> {
-                return init(bean)
-            }
-            else -> bean
-        }
+    override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? = when(bean) {
+        is Command -> init(bean)
+        else -> bean
     }
 
     private fun init(bean: Command): Command {

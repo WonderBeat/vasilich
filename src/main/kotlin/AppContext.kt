@@ -27,6 +27,12 @@ import com.vasilich.commands.bootstrap.CommandPostProcessor
 import com.vasilich.commands.bootstrap.outputMessageWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
+import com.vasilich.commands.basic.exec.ShellCommandExecutor
+import com.vasilich.commands.basic.exec.VerboseExecuteCfg
+import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
+import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
+import org.springframework.core.io.FileSystemResource
+import org.springframework.core.io.AbstractResource
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -36,7 +42,12 @@ ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connec
 open public class AppContext {
 
     Bean open fun appConfig(Autowired mapper: ObjectMapper): JsonNode {
-        return mapper.readTree(ClassPathResource("config.json").getFile()!!)!!
+        val configFileName = "config.json"
+        var config:AbstractResource = FileSystemResource(configFileName)
+        if(!config.exists()) {
+            config = ClassPathResource(configFileName)
+        }
+        return mapper.readTree(config.getFile())!!
     }
 
     Bean open fun objectMapper(): ObjectMapper {
@@ -63,6 +74,11 @@ open public class AppContext {
 
     Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
         return ReactiveCommandInitializer(reactor, commands)
+    }
+
+    Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
+        return VerboseShellCommandExecutor(reactor = reactor, cfg = cfg,
+                processMonitor = createMarkerBasedNotificator(cfg.marker, reactor))
     }
 
     Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
