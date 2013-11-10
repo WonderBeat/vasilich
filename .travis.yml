@@ -24,5 +24,6 @@ after_success:
 # encrypt -> openssl aes-256-cbc -k "pwd" -in id_rsa -out id_rsa.enc -a
 # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
     - cd mvn-repo
+    - git add *
     - git push
 
