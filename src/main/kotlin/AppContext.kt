@@ -33,6 +33,8 @@ import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
 import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
+import org.hyperic.sigar.SigarProxy
+import com.vasilich.commands.monitoring.SigarLoader
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -91,6 +93,10 @@ open public class AppContext {
 
     Bean open fun rootReactor(env: Environment): Observable {
         return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 10))!!.get()!!;
+    }
+
+    Bean open fun systemInfo(): SigarProxy {
+        return SigarLoader().createSigar()
     }
 
 }
