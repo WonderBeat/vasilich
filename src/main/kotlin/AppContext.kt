@@ -38,12 +38,12 @@ import com.vasilich.commands.chatbot.loadAimsFromClasspath
 import com.vasilich.commands.chatbot.ChatBotLoader
 import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
-
-class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
+import com.vasilich.connectors.xmpp.createAliasDetectorFilter
+import com.vasilich.connectors.chat.VasilichCfg
 
 Configuration
 EnableReactor
-ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors.xmpp", "com.vasilich.webhook"))
+ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors", "com.vasilich.webhook"))
 open public class AppContext {
 
     Bean open fun appConfig(Autowired mapper: ObjectMapper): JsonNode {
@@ -86,11 +86,9 @@ open public class AppContext {
                 processMonitor = createMarkerBasedNotificator(cfg.marker, reactor))
     }
 
-    Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
-        fun usernameInputMessageFilter(username: String): (Message) -> Boolean {
-            return { (msg: Message) -> msg.getBody()!!.startsWith(username) }
-        }
-        val simpleChat = FilteredChat(createChat(cfg), recieveFilter = usernameInputMessageFilter(cfg.room.username))
+    Bean open fun chat(cfg: XmppConf, vasilichCfg: VasilichCfg, reactor: Observable): Chat<Message> {
+        val simpleChat = FilteredChat(createChat(cfg), recieveFilter = createAliasDetectorFilter(vasilichCfg
+                .aliases))
         return ReactiveChat(simpleChat, reactor)
     }
 

@@ -6,8 +6,6 @@ import reactor.core.Observable
 import reactor.event.selector.Selectors
 import reactor.function.Consumer
 import com.vasilich.connectors.chat.Chat
-import reactor.core.composable.spec.Promises
-import java.util.concurrent.TimeUnit
 
 public class Topics(val send: String = "send-message", val receive: String = "receive-message")
 
