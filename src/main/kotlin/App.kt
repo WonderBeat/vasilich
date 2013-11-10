@@ -6,5 +6,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 fun main(args : Array<String>) {
     AnnotationConfigApplicationContext(javaClass<AppContext>(), javaClass<WebServerContext>())
+    print("Running...")
     BufferedReader(InputStreamReader(System.`in`)).readLine();
 }
