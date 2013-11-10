@@ -15,7 +15,7 @@ class AliceChatbotTest extends Specification {
         given:
         AliceBotParser parser = new AliceBotParser();
 
-        def aimlResources = ChatbotPackage.loadAimsFromClasspath("/Bots/Alice/")
+        def aimlResources = ChatbotPackage.loadAimsFromClasspath("classpath:/Bots/Alice/**.aiml")
 
         AliceBot bot = ChatBotLoader.createBot(asInStream("/Bots/context.xml"),
                                     asInStream("/Bots/splitters.xml"),
