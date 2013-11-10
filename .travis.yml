@@ -15,6 +15,7 @@ before_script:
   - echo " StrictHostKeyChecking no" >> ~/.ssh/config
   - echo " CheckHostIP no" >> ~/.ssh/config
   - echo " IdentityFile $ID_FILE" >> ~/.ssh/config
+  - git config --global push.default simple
   - git clone git@github.com:WonderBeat/mvn-repo.git
 
 script: mvn deploy
