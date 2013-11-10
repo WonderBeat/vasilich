@@ -321,4 +321,16 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>repo</id>
+            <url>file://${project.basedir}/mvn-repo/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>file://${project.basedir}/mvn-repo/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
 </project>
