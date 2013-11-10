@@ -52,6 +52,8 @@ public class ChatTest() {
         replyFor("Vasilich, Hi", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
         replyFor("Vasilich, Good morning", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
         replyFor("Vasilich, Chao", { it?.contains("Bye, see you")!! }, "Vasilich is talkative. He should response.")
+        replyFor("Vslc, Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
+        replyFor("v Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
         replyFor("Vasilich, Do you know any good IT place to work in Spb?", { it?.contains("EPAM")!! }, "Vasilich is talkative. He should response.")
     }
 }

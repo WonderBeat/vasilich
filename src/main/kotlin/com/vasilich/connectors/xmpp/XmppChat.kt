@@ -7,6 +7,7 @@ import com.vasilich.config.Config
 import com.vasilich.connectors.chat.Chat
 import org.jivesoftware.smack.packet.Message
 import org.jivesoftware.smack.PacketListener
+import com.vasilich.connectors.chat.NopMessage
 import org.springframework.beans.factory.annotation.Autowired
 
 public class XmppRoomCfg(val id: String = "", val username: String = "", val password: String = "")
@@ -23,6 +24,18 @@ public class XmppConf(val server: String = "",
                       val password: String = "",
                       val room: XmppRoomCfg = XmppRoomCfg("", "", ""))
 
+fun createAliasDetectorFilter(aliases: Array<String>): (Message) -> Message {
+    val aliasesLowerCase = aliases.map { it.toLowerCase() }
+    return {
+        val firstWord = it.getBody()?.split(" ")?.get(0)?.toLowerCase()
+        val matchedAlias = aliasesLowerCase.find { alias -> firstWord?.startsWith(alias) }
+        when(matchedAlias) {
+            null -> NopMessage
+            else -> { it.setBody(it.getBody()?.substring(matchedAlias.length)?.trim()); it}
+        }
+    }
+}
+
 fun createChat(cfg: XmppConf): XmppChat {
     val connection = XMPPConnection(cfg.server)
     connection.connect()
@@ -32,7 +45,7 @@ fun createChat(cfg: XmppConf): XmppChat {
     return XmppChat(chat)
 }
 
-public class XmppChat [Autowired](private val chat: MultiUserChat): Chat<Message> {
+public class XmppChat [Autowired] (private val chat: MultiUserChat): Chat<Message> {
 
     override fun send(msg: String) {
         chat.sendMessage(msg)

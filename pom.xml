@@ -162,11 +162,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>chatterbean</groupId>
-            <artifactId>chatterbean</artifactId>
-            <version>0.08</version>
-        </dependency>
-        <dependency>
             <groupId>org.beanshell</groupId>
             <artifactId>bsh</artifactId>
             <version>1.3.0</version>
@@ -189,6 +184,7 @@
                         <configuration>
                             <sources>
                                 <source>src/main/java</source>
+                                <source>alice-src</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -268,6 +264,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14</version>
+                <configuration>
+                    <parallel>true</parallel>
+                    <threadCount>3</threadCount>
+                    <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.0</version>
                 <executions>
@@ -314,5 +320,17 @@
             <url>http://repo.springsource.org/libs-snapshot</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>repo</id>
+            <url>file://${project.basedir}/mvn-repo/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshot-repo</id>
+            <url>file://${project.basedir}/mvn-repo/snapshots</url>
+            <uniqueVersion>false</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
 
 </project>
