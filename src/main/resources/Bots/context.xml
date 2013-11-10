@@ -13,7 +13,7 @@
   <!-- Default values for predicates, can be changed later at runtime. -->
   <set name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
   <set name="name" value="Unknown Person"/>
-  <set name="me" value="Alice"/>
+  <set name="me" value="Vasilich"/>
   <set name="engine" value="ChatterBean"/>
   <set name="topic" value="*"/>
 </context>
