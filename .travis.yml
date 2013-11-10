@@ -25,5 +25,6 @@ after_success:
 # decrypt -> openssl aes-256-cbc -k "pwd" -in deploy_key.enc -d -a -out id_rsa
     - cd mvn-repo
     - git add *
+    - git commit -m "A new shinny snapshot"
     - git push
 
