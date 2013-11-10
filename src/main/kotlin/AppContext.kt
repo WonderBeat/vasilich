@@ -37,6 +37,7 @@ import com.vasilich.commands.chatbot.ChatBotCommand
 import com.vasilich.commands.chatbot.loadAimsFromClasspath
 import com.vasilich.commands.chatbot.ChatBotLoader
 import java.io.ByteArrayOutputStream
+import org.springframework.context.annotation.Lazy
 
 class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
 
@@ -97,6 +98,7 @@ open public class AppContext {
         return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 10))!!.get()!!;
     }
 
+    Lazy
     Bean open fun chatBot(): ChatBotCommand {
         val aimlResources = loadAimsFromClasspath("/Bots/Alice/")
         val bot = ChatBotLoader.createBot(
