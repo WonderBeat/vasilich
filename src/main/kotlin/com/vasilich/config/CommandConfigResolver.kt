@@ -16,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired
  * }
  * Resolver tries to convert this node into CommandCfg object
  */
-public class CommandConfigResolver [Autowired] (private val appCfg: JsonNode,
-                                   private val mapper: ObjectMapper) {
+public class CommandConfigResolver [Autowired] (
+        private val appCfg: JsonNode,
+        private val mapper: ObjectMapper) {
 
     /**
      * Resolves configuration node

@@ -15,7 +15,7 @@
 		"aliases": ["ping"]
 	},
 
-	"currenttime": {
+	"date-time": {
 		"aliases": ["который час", "time", "what time", "серверное время"],
 		"output": "Время: {0}"
 	}

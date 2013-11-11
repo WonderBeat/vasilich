@@ -37,7 +37,7 @@ public class ChatTest() {
     /**
      * Integration test. Real chat between Michalich and Vasilich
      */
-    Test fun testConfigExtraction() {
+    Test fun chatTest() {
         replyFor("Vasilich, ping", { it == "pong" }, "Ping command should recieve a reply")
         replyFor("Vasilich, what time is it?", { it?.startsWith("Current time")!! },
                     "Vasilich should reply with current server time")
@@ -49,5 +49,11 @@ public class ChatTest() {
                 { it?.contains("Invisible exception occurs")!! },
                 "Vasilich should launch script and prints output during script execution")
         replyFor("Vasilich, WTF?", { it != null }, "Vasilich is talkative. He should response ;)")
+        replyFor("Vasilich, Hi", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
+        replyFor("Vasilich, Good morning", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
+        replyFor("Vasilich, Chao", { it?.contains("Bye, see you")!! }, "Vasilich is talkative. He should response.")
+        replyFor("Vslc, Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
+        replyFor("v Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
+        replyFor("Vasilich, Do you know any good IT place to work in Spb?", { it?.contains("EPAM")!! }, "Vasilich is talkative. He should response.")
     }
 }

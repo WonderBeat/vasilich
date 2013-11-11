@@ -35,12 +35,17 @@ import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
 import org.hyperic.sigar.SigarProxy
 import com.vasilich.commands.monitoring.SigarLoader
-
-class CommunicationTopics(val send: String = "send-message", val receive: String = "receive-message")
+import com.vasilich.commands.chatbot.ChatBotCommand
+import com.vasilich.commands.chatbot.loadAimsFromClasspath
+import com.vasilich.commands.chatbot.ChatBotLoader
+import java.io.ByteArrayOutputStream
+import org.springframework.context.annotation.Lazy
+import com.vasilich.connectors.xmpp.createAliasDetectorFilter
+import com.vasilich.connectors.chat.VasilichCfg
 
 Configuration
 EnableReactor
-ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors.xmpp"))
+ComponentScan(basePackages = array("com.vasilich.commands", "com.vasilich.connectors", "com.vasilich.webhook"))
 open public class AppContext {
 
     Bean open fun appConfig(Autowired mapper: ObjectMapper): JsonNode {
@@ -83,11 +88,9 @@ open public class AppContext {
                 processMonitor = createMarkerBasedNotificator(cfg.marker, reactor))
     }
 
-    Bean open fun chat(cfg: XmppConf, reactor: Observable): Chat<Message> {
-        fun usernameInputMessageFilter(username: String): (Message) -> Boolean {
-            return { (msg: Message) -> msg.getBody()!!.startsWith(username) }
-        }
-        val simpleChat = FilteredChat(createChat(cfg), recieveFilter = usernameInputMessageFilter(cfg.room.username))
+    Bean open fun chat(cfg: XmppConf, vasilichCfg: VasilichCfg, reactor: Observable): Chat<Message> {
+        val simpleChat = FilteredChat(createChat(cfg), recieveFilter = createAliasDetectorFilter(vasilichCfg
+                .aliases))
         return ReactiveChat(simpleChat, reactor)
     }
 
@@ -97,6 +100,21 @@ open public class AppContext {
 
     Bean open fun systemInfo(): SigarProxy {
         return SigarLoader().createSigar()
+    }
+
+    Lazy
+    Bean open fun chatBot(): ChatBotCommand {
+        val aimlResources = loadAimsFromClasspath("classpath:/Bots/Alice/*.aiml")
+        val bot = ChatBotLoader.createBot(
+                ClassPathResource("/Bots/context.xml").getInputStream(),
+                ClassPathResource("/Bots/splitters.xml").getInputStream(),
+                ClassPathResource("/Bots/substitutions.xml").getInputStream(), aimlResources)
+        val context = bot!!.getContext();
+        val gossip = ByteArrayOutputStream()
+        context!!.outputStream(gossip);
+
+
+        return ChatBotCommand(bot)
     }
 
 }
