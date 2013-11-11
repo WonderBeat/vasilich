@@ -3,6 +3,7 @@ if [ -n "$PASSWORD" ]; then
     openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
     chmod 600 id_rsa
     ID_FILE=$(pwd)/id_rsa
+    echo "   IdentityFile $ID_FILE" >> ~/.ssh/config
     cd mvn-repo
     git config --global user.email "WonderBeat@github.com"
     git config --global user.name "WonderBeat"
