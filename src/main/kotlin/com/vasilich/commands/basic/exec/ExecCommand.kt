@@ -20,14 +20,11 @@ Component
 public class ExecCommand [Autowired] (private val cfg: ExecCgf,
                                       private val shell: ShellCommandExecutor): Command {
 
-    val logger = LoggerFactory.getLogger(this.javaClass)!!;
-
     override fun execute(msg: String): String? {
         val scriptUnit = cfg.scripts.find { it.aliases.any { msg.contains(it) } }
         if(scriptUnit == null) {
             return null
         }
-        logger.debug("Exec cmd: ${scriptUnit.script}")
         val output = MessageFormat.format(scriptUnit.output, shell.exec(scriptUnit.script, cfg.timeout))
         return if(output.isEmpty()) cfg.done else output
     }
