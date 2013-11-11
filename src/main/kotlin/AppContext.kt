@@ -33,6 +33,8 @@ import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
 import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
+import org.hyperic.sigar.SigarProxy
+import com.vasilich.commands.monitoring.SigarLoader
 import com.vasilich.commands.chatbot.ChatBotCommand
 import com.vasilich.commands.chatbot.loadAimsFromClasspath
 import com.vasilich.commands.chatbot.ChatBotLoader
@@ -93,6 +95,10 @@ open public class AppContext {
 
     Bean open fun rootReactor(env: Environment): Observable {
         return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!;
+    }
+
+    Bean open fun systemInfo(): SigarProxy {
+        return SigarLoader().createSigar()
     }
 
     Lazy
