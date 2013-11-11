@@ -168,12 +168,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.scijava</groupId>
-            <artifactId>native-lib-loader</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.fusesource</groupId>
             <artifactId>sigar</artifactId>
             <version>1.6.4</version>
@@ -196,6 +190,7 @@
                             <sources>
                                 <source>src/main/java</source>
                                 <source>alice-src</source>
+                                <source>nll-src</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -325,16 +320,6 @@
             </snapshots>
             <url>http://repo.springsource.org/libs-snapshot</url>
         </repository>
-        <!-- In Project repository -->
-        <repository>
-            <id>in-project</id>
-            <name>In Project Repo</name>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <url>file://${project.basedir}/libs</url>
-        </repository>
-
     </repositories>
 
     <distributionManagement>
