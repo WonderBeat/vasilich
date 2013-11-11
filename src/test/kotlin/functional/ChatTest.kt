@@ -48,11 +48,9 @@ public class ChatTest() {
         replyFor("Vasilich, there was a verbose script. Please, launch it and print output",
                 { it?.contains("Invisible exception occurs")!! },
                 "Vasilich should launch script and prints output during script execution")
-        replyFor("Vasilich, WTF?", { it != null }, "Vasilich is talkative. He should response ;)")
-        replyFor("Vasilich, Hi", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
-        replyFor("Vasilich, Good morning", { it?.contains("Hello")!! }, "Vasilich is talkative. He should response.")
-        replyFor("Vasilich, Chao", { it?.contains("Bye, see you")!! }, "Vasilich is talkative. He should response.")
-        replyFor("Vslc, Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
+        replyFor("Vasilich, WTF?", { it != null }, "Vasilich is talkative. He should response with chatbot ;)")
+        replyFor("Vasilich, Hi", { it?.contains("Hello")!! }, "Simple chat command")
+        replyFor("Vasilich, Chao", { it?.contains("Bye, see you")!! }, "Simple chat command")
         replyFor("v Chao", { it?.contains("Bye, see you")!! }, "Vasilich should support pseudonims")
         replyFor("Vasilich, Do you know any good IT place to work in Spb?", { it?.contains("EPAM")!! }, "Vasilich is talkative. He should response.")
     }
