@@ -13,6 +13,7 @@ if [ -n "$PASSWORD" ]; then
     git clone git@github.com:WonderBeat/mvn-repo.git repo
     cp -R mvn-repo/* repo/
     cd repo
+    git add *
     git commit -m "A new shinny snapshot"
     git push
 else
