@@ -5,9 +5,9 @@ jdk:
 env:
   global:
     # PASSWORD=pwd
+  - secure: "RwQ1Fxe/O4PxdvsJjiPFoAUuX/pqNLAxAr5dBCK7cx+DpXtnYMAk2MRgdr2ih03B+tU55LzZKi1BCzALlt9v/77FpO4foz2c5/WPlK9my7Xic+U+1aoiG9FEFR9loLu/3S/mNfEXc/nwgu/dtttwYb2enApri65PUMaIoui3SLQ="
 
 before_script:
-  - secure: "RwQ1Fxe/O4PxdvsJjiPFoAUuX/pqNLAxAr5dBCK7cx+DpXtnYMAk2MRgdr2ih03B+tU55LzZKi1BCzALlt9v/77FpO4foz2c5/WPlK9my7Xic+U+1aoiG9FEFR9loLu/3S/mNfEXc/nwgu/dtttwYb2enApri65PUMaIoui3SLQ="
   - openssl aes-256-cbc -k $PASSWORD -in deploy_key.enc -d -a -out id_rsa
   - chmod 600 id_rsa
   - ID_FILE=$(pwd)/id_rsa
