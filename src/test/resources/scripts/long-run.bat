@@ -1,6 +1,5 @@
-ECHO OFF
-CLS
-ECHO VSLC: one
-sleep 10
-ECHO VSLC: two
-exit 0
+echo VSLC: one
+sleep 2
+echo VSLC: two
+sleep 1
+echo VSLC: three

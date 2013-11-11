@@ -18,8 +18,7 @@ public class ExecUnit(val aliases: Array<String> = array(), val script: String =
 
 Component
 public class ExecCommand [Autowired] (private val cfg: ExecCgf,
-                                      private val shell: ShellCommandExecutor,
-                                      private val shellCommandProvider: ShellCommandResolver): Command {
+                                      private val shell: ShellCommandExecutor): Command {
 
     val logger = LoggerFactory.getLogger(this.javaClass)!!;
 
@@ -28,9 +27,8 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf,
         if(scriptUnit == null) {
             return null
         }
-        val cmd = shellCommandProvider.cmdForName(scriptUnit.script)
-        logger.debug("Exec cmd: ${cmd}")
-        val output = MessageFormat.format(scriptUnit.output, shell.exec(cmd, cfg.timeout))
+        logger.debug("Exec cmd: ${scriptUnit.script}")
+        val output = MessageFormat.format(scriptUnit.output, shell.exec(scriptUnit.script, cfg.timeout))
         return if(output.isEmpty()) cfg.done else output
     }
 
