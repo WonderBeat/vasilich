@@ -1,38 +1,15 @@
 package com.vasilich.commands.basic.exec
 
-import reactor.core.Observable
 import com.vasilich.config.Config
 import org.springframework.stereotype.Component
-import org.apache.commons.exec.ExecuteWatchdog
-import org.apache.commons.exec.DefaultExecutor
-import org.apache.commons.exec.CommandLine
-import org.apache.commons.exec.PumpStreamHandler
-import org.apache.commons.exec.DefaultExecuteResultHandler
-import java.io.PipedOutputStream
-import java.io.PipedInputStream
-import com.vasilich.connectors.xmpp.Topics
-import java.io.OutputStream
-import java.io.InputStream
-import reactor.event.Event
+import org.springframework.core.io.FileSystemResource
+import java.util.Scanner
+import java.util.LinkedList
+import org.slf4j.LoggerFactory
 
 Component
 Config("exec")
-public class VerboseExecuteCfg(val marker: Array<String> = array("VSLC: "), val discrete: Long = 800)
-
-
-/**
- * Weee. Apache exec has not been released for 3 years.
- * Need to find a replacement
- * https://issues.apache.org/jira/browse/EXEC-49
- */
-class PumpStreamHandlerFixed(out: OutputStream): PumpStreamHandler(out) {
-
-    override protected fun createPump(`is`: InputStream?, os: OutputStream?): Thread? {
-        return createPump(`is`, os, true);
-    }
-
-}
-
+public class VerboseExecuteCfg(val marker: Array<String> = array("VSLC: "))
 
 /**
  * This executor knows, that it's possible to notify about execution process via reactor notificatin
@@ -42,21 +19,20 @@ class PumpStreamHandlerFixed(out: OutputStream): PumpStreamHandler(out) {
 public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
                                          private val processMonitor: (String) -> Unit = {}): ShellCommandExecutor {
 
+    val logger = LoggerFactory.getLogger(javaClass<VerboseShellCommandExecutor>())!!;
+
     override fun exec(cmd: String, timeout: Long): String {
-        val stdout = PipedInputStream()
-        val psh = PumpStreamHandlerFixed(PipedOutputStream(stdout))
-        val resultHandler = DefaultExecuteResultHandler()
-        val exec = DefaultExecutor()
-        exec.setWatchdog(ExecuteWatchdog(timeout))
-        exec.setStreamHandler(psh)
-        exec.execute(CommandLine.parse(cmd), resultHandler)
-        val output = linkedListOf<String>()
-        do {
-            resultHandler.waitFor(cfg.discrete)
-            val outputPortion = stdout.reader("UTF-8").readText()
-            output add outputPortion
-            processMonitor(outputPortion)
-        } while(!resultHandler.hasResult())
-        return output.reduce { a, b -> a + b }
+        val resource = FileSystemResource(cmd)
+        val builder = ProcessBuilder(resource.getPath())
+        logger.debug("Exec cmd: ${resource.getPath()}")
+        val proc = builder.start()
+        val scanner = Scanner(proc.getInputStream()!!, "UTF-8")
+        val output = LinkedList<String>()
+        while (scanner.hasNext()) {
+            val line = scanner.nextLine()
+            output add line
+            processMonitor(line)
+        }
+        return output.toList().makeString("\n")
     }
 }

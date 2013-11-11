@@ -14,6 +14,7 @@ import com.vasilich.connectors.chat.FilteredChat
 import com.vasilich.connectors.xmpp.createChat
 import reactor.core.Reactor
 import com.vasilich.connectors.chat.NopMessage
+import functional.listener.ScriptExtensionPostProcessor
 
 Config("listener")
 class XmppLisenerCfg(val login: String = "", val password: String = "", val nick: String = "")
@@ -52,6 +53,14 @@ public open class ListenerContext {
      */
     Bean open fun roomRandomizerPostProcessor(): BeanPostProcessor {
         return RoomRandomizerPostProcessor()
+    }
+
+    /**
+     * Tests can be launched in Win and Linux
+     * We should pick a proper script
+     */
+    Bean open fun scriptExtensionPostProcessor(): BeanPostProcessor {
+        return ScriptExtensionPostProcessor()
     }
 
     Bean open fun cfg(): XmppLisenerCfg {
