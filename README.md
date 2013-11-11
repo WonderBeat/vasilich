@@ -3,6 +3,13 @@ vasilich
 
 Chat Bot. Can help you with deploy, monitoring and alerting.
 
+# Demo
+Vasilich demo instance is running on:
+ 
+* XMPP:  
+  * host: is-a-furry.org  
+  * room: vasilich  [@muc.is-a-furry.org]
+
 
 # RoadMap
 - [X] Trigger script execution
