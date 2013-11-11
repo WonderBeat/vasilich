@@ -1,6 +1,5 @@
 package com.vasilich.commands.basic.exec
 
-import reactor.core.Observable
 import com.vasilich.config.Config
 import org.springframework.stereotype.Component
 import org.apache.commons.exec.ExecuteWatchdog
@@ -10,10 +9,9 @@ import org.apache.commons.exec.PumpStreamHandler
 import org.apache.commons.exec.DefaultExecuteResultHandler
 import java.io.PipedOutputStream
 import java.io.PipedInputStream
-import com.vasilich.connectors.xmpp.Topics
 import java.io.OutputStream
 import java.io.InputStream
-import reactor.event.Event
+import org.springframework.core.io.FileSystemResource
 
 Component
 Config("exec")
@@ -49,14 +47,19 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
         val exec = DefaultExecutor()
         exec.setWatchdog(ExecuteWatchdog(timeout))
         exec.setStreamHandler(psh)
+        exec.setWorkingDirectory(FileSystemResource(System.getProperty("user.dir")).getFile())
         exec.execute(CommandLine.parse(cmd), resultHandler)
         val output = linkedListOf<String>()
+        val procB = ProcessBuilder(cmd)
+        val proc = procB.start()
+        proc.waitFor()
+        val exit = proc.exitValue()
         do {
             resultHandler.waitFor(cfg.discrete)
             val outputPortion = stdout.reader("UTF-8").readText()
             output add outputPortion
             processMonitor(outputPortion)
         } while(!resultHandler.hasResult())
-        return output.reduce { a, b -> a + b }
+        return stdout.toString()!!
     }
 }
