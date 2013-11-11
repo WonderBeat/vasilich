@@ -84,8 +84,7 @@ open public class AppContext {
     }
 
     Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
-        return VerboseShellCommandExecutor(reactor = reactor, cfg = cfg,
-                processMonitor = createMarkerBasedNotificator(cfg.marker, reactor))
+        return VerboseShellCommandExecutor(cfg, createMarkerBasedNotificator(cfg.marker, reactor))
     }
 
     Bean open fun chat(cfg: XmppConf, vasilichCfg: VasilichCfg, reactor: Observable): Chat<Message> {
@@ -95,7 +94,7 @@ open public class AppContext {
     }
 
     Bean open fun rootReactor(env: Environment): Observable {
-        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(2, 10))!!.get()!!;
+        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!;
     }
 
     Bean open fun systemInfo(): SigarProxy {

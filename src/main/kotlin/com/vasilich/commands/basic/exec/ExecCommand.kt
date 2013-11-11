@@ -12,7 +12,7 @@ Component
 Config("exec")
 public class ExecCgf(val env: ExecutionEnv = OsDetails.current,
                      val scripts: Array<ExecUnit> = array(),
-                     val timeout: Long = 10000,
+                     val timeout: Long = 60000,
                      val done: String = "Done")
 
 public class ExecUnit(val aliases: Array<String> = array(), val script: String = "", val output: String = "")
