@@ -39,9 +39,7 @@ class PumpStreamHandlerFixed(out: OutputStream): PumpStreamHandler(out) {
  * Every time, output contains line, witch matches 'notify' selector, we will notify users
  * @author Denis Golovachev
  */
-public class VerboseShellCommandExecutor(private val reactor: Observable,
-                                         private val cfg: VerboseExecuteCfg,
-                                         private val topics: Topics = Topics(),
+public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
                                          private val processMonitor: (String) -> Unit = {}): ShellCommandExecutor {
 
     override fun exec(cmd: String, timeout: Long): String {
