@@ -6,11 +6,6 @@ import bitoflife.chatterbean.AliceBot
 
 public class ChatBotCommand (private val alice: AliceBot): Command, Ordered {
 
-    override fun getOrder(): Int {
-        return Ordered.LOWEST_PRECEDENCE
-    }
-    override fun execute(msg: String): String? {
-        val msgT = msg.trimLeading("Vasilich, ")
-        return alice.respond(msgT)
-    }
+    override fun getOrder(): Int = Ordered.LOWEST_PRECEDENCE
+    override fun execute(msg: String): String? = alice.respond(msg)
 }
