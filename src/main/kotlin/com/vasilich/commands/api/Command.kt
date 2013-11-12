@@ -16,3 +16,8 @@ package com.vasilich.commands.api
 public trait Command {
     fun execute(msg: String): String?
 }
+
+object NoopCommand: Command {
+    override fun execute(msg: String): String? = null
+}
+

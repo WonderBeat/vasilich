@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import com.fasterxml.jackson.databind.node.ObjectNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.vasilich.commands.api.Command
+import kotlin.properties.Delegates
 import org.springframework.beans.factory.annotation.Autowired
 
 /**
@@ -27,7 +28,5 @@ public class InfoCommand [Autowired] (config: ObjectNode, mapper: ObjectMapper):
                                         ?.map { it.textValue() }
                                         ?.makeString("\n")
 
-    override fun execute(msg: String): String? {
-        return descriptions
-    }
+    override fun execute(msg: String): String? = descriptions
 }

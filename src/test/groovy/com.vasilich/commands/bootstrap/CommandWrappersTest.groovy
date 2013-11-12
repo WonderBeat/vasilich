@@ -24,12 +24,12 @@ class CommandWrappersTest extends Specification {
 
         where:
         wrapper | config | result
-        BootstrapPackage.enableThumblerCommandWrapper() | cfg(enabled: false) | 'no answer'
-        BootstrapPackage.enableThumblerCommandWrapper() | cfg(enabled: true) | 'success'
-        BootstrapPackage.aliasMatchCommandDetection() | cfg(aliases: ['what']) | 'no answer'
-        BootstrapPackage.aliasMatchCommandDetection() | cfg(aliases: ['alias']) | 'success'
-        BootstrapPackage.outputMessageWrapper() | cfg(outputFormatter: '') | 'success'
-        BootstrapPackage.outputMessageWrapper() | cfg(outputFormatter: 'abc {0}') | 'abc success'
+        BootstrapPackage.enableThumblerCommandWrapper | cfg(enabled: false) | 'no answer'
+        BootstrapPackage.enableThumblerCommandWrapper | cfg(enabled: true) | 'success'
+        BootstrapPackage.aliasMatchCommandDetection | cfg(aliases: ['what']) | 'no answer'
+        BootstrapPackage.aliasMatchCommandDetection | cfg(aliases: ['alias']) | 'success'
+        BootstrapPackage.outputMessageWrapper | cfg(outputFormatter: '') | 'success'
+        BootstrapPackage.outputMessageWrapper | cfg(outputFormatter: 'abc {0}') | 'abc success'
     }
 
 }
