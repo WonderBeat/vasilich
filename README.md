@@ -10,6 +10,10 @@ Vasilich demo instance is running on:
   * host: is-a-furry.org  
   * room: vasilich  [@muc.is-a-furry.org]
 
+# Video
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=I45GREV7PsY
+" target="_blank"><img src="http://img.youtube.com/vi/I45GREV7PsY/0.jpg" 
+alt="Vasilich video" width="240" height="180" border="10" /></a>
 
 # RoadMap
 - [X] Trigger script execution
