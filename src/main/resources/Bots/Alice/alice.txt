@@ -3,7 +3,7 @@
 <aiml>
   <category>
     <pattern>HELLO</pattern>
-    <template>Hello! My name is Alice, who are you?</template>
+    <template>Hello! My name is Vasilich, who are you?</template>
   </category>
   <category>
     <pattern>MY NAME IS *</pattern>
@@ -27,11 +27,11 @@
   </category>
   <category>
     <pattern>_ BOT</pattern>
-    <template>Yes, I am an ALICE Bot.</template>
+    <template>Yes, I am an Vasilich Bot.</template>
   </category>
   <category>
     <pattern>_ NAME</pattern>
-    <template>My name is Alice, nice to meet you!</template>
+    <template>My name is Vasilich, nice to meet you!</template>
   </category>
   <category>
     <pattern>TELL ME ABOUT *</pattern>
