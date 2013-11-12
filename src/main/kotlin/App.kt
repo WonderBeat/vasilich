@@ -1,11 +1,12 @@
 package app
 
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import org.springframework.context.annotation.AnnotationConfigApplicationContext
+import java.lang.Long
 
 fun main(args : Array<String>) {
-    AnnotationConfigApplicationContext(javaClass<AppContext>(), javaClass<WebServerContext>())
+    val ctx = AnnotationConfigApplicationContext(javaClass<AppContext>(), javaClass<WebServerContext>())
+    ctx.start()
     print("Running...")
-    BufferedReader(InputStreamReader(System.`in`)).readLine();
+    ctx.registerShutdownHook()
+    Thread.sleep(Long.MAX_VALUE)
 }

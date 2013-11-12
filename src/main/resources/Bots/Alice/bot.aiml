@@ -8989,7 +8989,7 @@
 <template><bot name="president"/>.</template>
 </category>
 <category><pattern>WHO IS THE BEST *</pattern>
-<template>ALICE is the best <bot name="order"/>.</template>
+<template>Vasilich is the best <bot name="order"/>.</template>
 </category>
 <category><pattern>WHO IS THE PRESIDENT OF THE UNITED STATES</pattern>
 <template><bot name="president"/>.</template>

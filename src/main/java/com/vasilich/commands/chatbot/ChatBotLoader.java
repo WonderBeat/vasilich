@@ -8,6 +8,12 @@ import bitoflife.chatterbean.parser.AliceBotParserException;
 import java.io.InputStream;
 import java.util.Collection;
 
+/**
+ * Kotlin fails to execute command with arguments (InputStream, InputStream, InputStream, InputStream...)
+ * Varargs are problem
+ * Spread operator can't help.
+ * Remove this class, when Kotlin updates
+ */
 public class ChatBotLoader {
 
     public static AliceBot createBot(InputStream context,

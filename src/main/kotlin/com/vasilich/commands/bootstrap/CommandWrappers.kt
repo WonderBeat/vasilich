@@ -13,47 +13,46 @@ public fun and(one: (Command, CommandCfg) -> Command,
 /**
  * Enable/Disable config functionality
  */
-public fun enableThumblerCommandWrapper(): (Command, CommandCfg) -> Command {
-    return { cmd, cfg ->
-            when {
-                cfg.enabled -> cmd
-                else -> NoopCommand
-            }
+public val enableThumblerCommandWrapper: (Command, CommandCfg) -> Command =
+    { cmd, cfg ->
+        when {
+            cfg.enabled -> cmd
+            else -> NoopCommand
         }
-}
+    }
 
 /**
  * Command will be triggered only if message contains one of aliases
  */
-public fun aliasMatchCommandDetection(): (Command, CommandCfg) -> Command {
-    return { cmd, cfg ->
+public val aliasMatchCommandDetection: (Command, CommandCfg) -> Command =
+    { cmd, cfg ->
         object: Command {
-        override fun execute(msg: String): String? = when {
-            cfg.aliases.isEmpty() || cfg.aliases.any { msg.contains(it) } -> cmd.execute(msg)
-            else -> null
+            override fun execute(msg: String): String? = when {
+                cfg.aliases.isEmpty() || cfg.aliases.any { msg.contains(it) } -> cmd.execute(msg)
+                else -> null
+            }
         }
-    }}
-}
+    }
 
 /**
  * Formats output message
  * Based on configuration string
  */
-public fun outputMessageWrapper(): (Command, CommandCfg) -> Command {
-    return { cmd, cfg ->
+public val outputMessageWrapper: (Command, CommandCfg) -> Command =
+    { cmd, cfg ->
         object: Command {
             override fun execute(msg: String): String? = when {
                 !cfg.output.isEmpty() -> MessageFormat.format(cfg.output, cmd.execute(msg))
                 else -> cmd.execute(msg)
                 }
-        }}
-}
+        }
+    }
 
 /**
  * If first command doesn't resolve, then triggers another one
  */
-public fun chainCommands(one: Command, another: Command): Command {
-    return object: Command {
+public fun chainCommands(one: Command, another: Command): Command =
+    object: Command {
             override fun execute(msg: String): String? {
                 val result = one.execute(msg)
                 when(result) {
@@ -62,4 +61,3 @@ public fun chainCommands(one: Command, another: Command): Command {
                 }
             }
     }
-}

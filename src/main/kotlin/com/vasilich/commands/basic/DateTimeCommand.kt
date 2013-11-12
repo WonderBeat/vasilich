@@ -6,8 +6,5 @@ import com.vasilich.commands.api.Command
 
 Component
 public class DateTimeCommand : Command {
-
-    override fun execute(msg: String): String? {
-        return Date().toString()
-    }
+    override fun execute(msg: String): String? = Date().toString()
 }

@@ -2,7 +2,7 @@
 
 <aiml>
   <category>
-    <pattern>_ ALICE</pattern>
+    <pattern>_ Vasilich</pattern>
     <template><sr/></template>
   </category>
   <category>
