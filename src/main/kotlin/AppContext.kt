@@ -40,6 +40,7 @@ import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
+import kotlin.properties.Delegates
 
 Configuration
 EnableReactor
@@ -72,9 +73,9 @@ open public class AppContext {
     }
 
     Bean open fun simpleCommandPostProcessor(configResolver: CommandConfigResolver): BeanPostProcessor {
-        val wrappers = array(aliasMatchCommandDetection(), outputMessageWrapper())
+        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper)
         return CommandPostProcessor(configResolver,
-                wrappers.fold(enableThumblerCommandWrapper(), { one, another -> and(one, another) }))
+                wrappers.fold(enableThumblerCommandWrapper, { one, another -> and(one, another) }))
     }
 
     Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
@@ -92,20 +93,19 @@ open public class AppContext {
     }
 
     Bean open fun rootReactor(env: Environment): Observable {
-        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!;
+        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!
     }
 
     Lazy
-    Bean open fun chatBot(): ChatBotCommand {
+    Bean open fun chatBot(): Command {
         val aimlResources = loadAimsFromClasspath("classpath:/Bots/Alice/*.aiml")
         val bot = ChatBotLoader.createBot(
                 ClassPathResource("/Bots/context.xml").getInputStream(),
                 ClassPathResource("/Bots/splitters.xml").getInputStream(),
                 ClassPathResource("/Bots/substitutions.xml").getInputStream(), aimlResources)
-        val context = bot!!.getContext();
+        val context = bot!!.getContext()
         val gossip = ByteArrayOutputStream()
-        context!!.outputStream(gossip);
-
+        context!!.outputStream(gossip)
 
         return ChatBotCommand(bot)
     }

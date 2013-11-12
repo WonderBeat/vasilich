@@ -3,6 +3,7 @@ package com.vasilich.commands.chatbot
 import org.springframework.core.Ordered
 import com.vasilich.commands.api.Command
 import bitoflife.chatterbean.AliceBot
+import kotlin.properties.Delegates
 
 public class ChatBotCommand (private val alice: AliceBot): Command, Ordered {
 

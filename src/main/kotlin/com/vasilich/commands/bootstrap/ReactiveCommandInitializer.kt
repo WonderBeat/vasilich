@@ -38,7 +38,7 @@ public class ReactiveCommandInitializer [Autowired] (private val reactor: Observ
     private fun makeReactive() {
         reactor.on(Selectors.`$`("receive-message"), Consumer<Event<String>> {
             val msg = it!!.getData()!!
-            val response = commandComposite  execute msg
+            val response = commandComposite execute msg
             if(response != null) {
                 logger.debug("Chat: ${msg} -> ${response}")
                 reactor.notify("send-message", Event.wrap(response))
