@@ -19,7 +19,7 @@ alt="Vasilich video" width="240" height="180" border="10" /></a>
 - [X] Trigger script execution
 - [X] Chat Bot backend (if no command found, Vasilich should reply as a simple chat-bot)
 - [X] Extended script execution (interactive mode. Vasilich should notify about script execution process)
-- [ ] Webhook support
+- [X] Webhook support
 - [ ] Monitoring and Scheduling
 - [X] Single Jar packaging. Vasilich should be as simple as possible. (One JAR and one configuration file)
 - [ ] IRC connector
