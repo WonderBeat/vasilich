@@ -7,6 +7,7 @@ import java.nio.file.FileStore
 import java.nio.file.FileSystems
 import java.nio.file.Paths
 import java.io.PrintStream
+import org.apache.commons.lang3.SystemUtils
 
 /**
  *
@@ -21,17 +22,22 @@ public class DiskUsageCommand : Command {
 
     override fun execute(msg: String): String? {
 
-        var output = "Disk usage: \n%-20s %12s %12s %12s\n".format("Filesystem", "Gb", "used", "avail");
-
+        var output = "Disk Usage Statistics:"
         val fs = FileSystems.getDefault();
+
         for (store in fs?.getFileStores()!!) {
             val total = store.getTotalSpace() / K;
             val used = (store.getTotalSpace() - store.getUnallocatedSpace()) / K;
             val avail = store.getUsableSpace() / K;
 
-            val diskName = store.toString();
+            var diskName = store.toString()!!
 
-            output += "%-20s %12d %12d %12d\n".format(diskName, total, used, avail);
+            if (SystemUtils.IS_OS_WINDOWS) {
+                diskName = diskName.split("\\s").filter {
+                    it.matches("^\\([A-Z]:\\)$")
+                }.first as String
+            }
+            output += "\n%-4s T:%5dGb U:%4dGb A:%4dGb".format(diskName, total, used, avail);
         }
         return output
     }

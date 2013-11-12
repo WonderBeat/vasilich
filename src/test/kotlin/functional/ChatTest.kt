@@ -41,6 +41,8 @@ public class ChatTest() {
         replyFor("Vasilich, ping", { it == "pong" }, "Ping command should recieve a reply")
         replyFor("Vasilich, what time is it?", { it?.startsWith("Current time")!! },
                     "Vasilich should reply with current server time")
+        replyFor("Vasilich, disk", { it?.startsWith("Disk Usage Statistics:")!! && it?.contains("Gb")!!},
+                    "Vasilich should know about available disks space")
         replyFor("Vasilich, what's your uptime?", { it?.startsWith("Oh, long enough")!! && it!!.length > 20 },
                     "Vasilich should launch script and prints output")
         replyFor("Vasilich, what can you do?", { it?.contains("abracadabra")!! },
