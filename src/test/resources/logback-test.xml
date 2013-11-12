@@ -1,5 +1,5 @@
 <configuration scan="true" scanPeriod="10 minutes">
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>logs/vasilich-test.log</file>
         <encoder>
             <pattern>%d{hh:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
