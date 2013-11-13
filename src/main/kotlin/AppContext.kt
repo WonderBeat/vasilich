@@ -1,3 +1,5 @@
+package app
+
 import org.springframework.context.annotation.Configuration
 import reactor.spring.context.config.EnableReactor
 import org.springframework.context.annotation.ComponentScan
