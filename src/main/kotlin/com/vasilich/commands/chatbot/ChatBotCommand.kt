@@ -8,5 +8,7 @@ import kotlin.properties.Delegates
 public class ChatBotCommand (private val alice: AliceBot): Command, Ordered {
 
     override fun getOrder(): Int = Ordered.LOWEST_PRECEDENCE
-    override fun execute(msg: String): String? = alice.respond(msg)
+    override fun execute(msg: String): String? {
+        return alice.respond(msg)
+    }
 }

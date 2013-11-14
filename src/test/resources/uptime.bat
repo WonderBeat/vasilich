@@ -1,1 +1,2 @@
-net statistics server
+@echo off
+net statistics server | find "Statistics"
