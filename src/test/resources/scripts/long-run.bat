@@ -1,3 +1,4 @@
+@echo off
 echo VSLC: one
 sleep 2
 echo VSLC: two
