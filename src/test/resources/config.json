@@ -76,6 +76,10 @@
             "Bye, see you" : ["Chao", "Bye"],
             "EPAM St.Petersburg" : ["In what office you was created?", "Do you know any good IT place to work in Spb?"]
         }
+    },
+
+    "disk-usage": {
+        "aliases" : ["disk"]
     }
 
 }
