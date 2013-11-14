@@ -13,6 +13,8 @@ public class BasicTalkCommandCgf(val knowledge : Map<String, Array<String>> = Ha
 
 val createPairs = { (entry : Map.Entry<String, Array<String>>) -> Pair(entry.getKey(), entry.getValue()) }
 
+fun String.containsIgnoreCase(it : String) = this.toLowerCase().contains(it.toLowerCase())
+
 Component
 public class BasicTalkCommand [Autowired] (private val cfg: BasicTalkCommandCgf): Command  {
 
@@ -22,7 +24,7 @@ public class BasicTalkCommand [Autowired] (private val cfg: BasicTalkCommandCgf)
     })
 
     override fun execute(msg: String): String? {
-        val key = knowledgeBase.keySet().find { msg.contains(it) }
+        val key = knowledgeBase.keySet().find { msg containsIgnoreCase it }
         when(key) {
            null -> return null
            else -> return knowledgeBase.get(key);
