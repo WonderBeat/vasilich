@@ -44,7 +44,7 @@ class ChatTest extends Specification {
         assert reply != null, "reply is null. Vasilich didn't respond for '${michalich}' in ${timeout} seconds"
         if(matcher instanceof String) {
             assert reply == matcher // simple match
-        } else if(matcher instanceof List) { // multiline answers
+        } else if(matcher instanceof List) { // multi line answers
             matcher.first().call(reply)
             matcher.tail().each { it.call(waitReply()); }
         } else {
@@ -56,6 +56,7 @@ class ChatTest extends Specification {
         'Vasilich, ping'            | 'pong'
         'v ping'                    | 'pong'
         'v Hi'                      | 'Hello'
+        'v good Morning!'           | 'Hello'
         'v so, Chao'                | 'Bye, see you'
         'v are you alive?'          | { assert it != null }
         "v what's your uptime"      | { assert it.startsWith('Oh, long enough') }
