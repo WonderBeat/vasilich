@@ -59,8 +59,8 @@
 				"output": "Oh, long enough: {0}"
 			},
 			{
-				"aliases": ["check connection"],
-				"script": "ping cq5-porn.com",
+				"aliases": ["check git version"],
+				"script": "git --version",
 				"output": "{0}"
 			},
 			{
