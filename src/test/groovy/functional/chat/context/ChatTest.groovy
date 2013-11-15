@@ -63,6 +63,7 @@ class ChatTest extends Specification {
         'v what can you do'         | { assert it.contains('abracadabra') }
         'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
                                        { assert it == 'Done' }]
+        'v check connection' | { assert it.contains('porn.com') } // no matter if ping succeeded or not
         'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
     }
 

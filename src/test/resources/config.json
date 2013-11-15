@@ -59,6 +59,11 @@
 				"output": "Oh, long enough: {0}"
 			},
 			{
+				"aliases": ["check connection"],
+				"script": "ping cq5-porn.com",
+				"output": "{0}"
+			},
+			{
 				"aliases": ["verbose script"],
 				"script": "src/test/resources/progress"
 			}
