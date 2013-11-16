@@ -21,10 +21,10 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
 
     val logger = LoggerFactory.getLogger(javaClass<VerboseShellCommandExecutor>())!!;
 
-    override fun exec(cmd: String, timeout: Long): String {
+    override fun exec(cmd: String, timeout: Long): ShellOutput {
         val resource = FileSystemResource(cmd)
         val builder = ProcessBuilder(resource.getPath())
-        logger.debug("Exec cmd: ${resource.getPath()}")
+        logger.debug("Exec: ${resource.getPath()}")
         val proc = builder.start()
         val scanner = Scanner(proc.getInputStream()!!, "UTF-8")
         val output = LinkedList<String>()
@@ -33,6 +33,6 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
             output add line
             processMonitor(line)
         }
-        return output.toList().makeString("\n")
+        return ShellOutput(proc.exitValue(), output.toList().makeString("\n"))
     }
 }

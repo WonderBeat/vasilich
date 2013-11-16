@@ -54,6 +54,10 @@
 	"exec": {
 		"scripts": [
 			{
+				"aliases": ["exit code"],
+				"script": "not a script"
+			},
+			{
 				"aliases": ["давно работаешь", "your uptime"],
 				"script": "src/test/resources/uptime",
 				"output": "Oh, long enough: {0}"
