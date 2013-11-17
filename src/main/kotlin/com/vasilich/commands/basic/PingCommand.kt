@@ -10,9 +10,5 @@ import com.vasilich.commands.api.Command
  */
 Component
 public class Ping: Command {
-
-    override fun execute(msg: String): String? {
-        return "pong"
-    }
-
+    override fun execute(msg: String): String? = "pong"
 }

@@ -15,7 +15,7 @@ if [ -n "$PASSWORD" ]; then
     cd repo
     git add *
     git commit -m "A new shinny snapshot"
-    git push
+    #git push
 else
     echo "Can't deploy without a password"
 fi

@@ -23,9 +23,7 @@ public class CommandPostProcessor (private val cfgProvider: CommandConfigResolve
 
     val logger = LoggerFactory.getLogger(javaClass<CommandPostProcessor>())!!;
 
-    override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
-        return bean
-    }
+    override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? = bean
 
     override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? = when(bean) {
         is Command -> init(bean)

@@ -5,9 +5,9 @@
 		"password": "C3cUSb^DidA7&fcoLa**",
 		"room":
 		{
-			"id": "tapcat@muc.is-a-furry.org",
+			"id": "vasilichtest@muc.is-a-furry.org",
 			"username": "Vasilich",
-			"password": "tapcat.net"
+			"password": "test"
 		}
 	},
 
@@ -21,7 +21,7 @@
 		"aliases": ["ping"]
 	},
 
-	"chatbot": {
+	"chat-bot": {
 	},
 
 	"date-time": {
@@ -29,7 +29,7 @@
         "output": "Current time: {0}"
     },
     
-	"webhook": {
+	"web-hook": {
 		"port": 9000,
 		"address": "0.0.0.0",
 		"commands": [
@@ -63,6 +63,11 @@
 				"output": "Oh, long enough: {0}"
 			},
 			{
+				"aliases": ["check git version"],
+				"script": "git --version",
+				"output": "{0}"
+			},
+			{
 				"aliases": ["verbose script"],
 				"script": "src/test/resources/progress"
 			}
@@ -80,6 +85,10 @@
             "Bye, see you" : ["Chao", "Bye"],
             "EPAM St.Petersburg" : ["In what office you was created?", "Do you know any good IT place to work in Spb?"]
         }
+    },
+
+    "disk-usage": {
+        "aliases" : ["disk"]
     }
 
 }
