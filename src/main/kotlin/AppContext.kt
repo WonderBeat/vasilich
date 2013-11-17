@@ -42,7 +42,7 @@ import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
-import kotlin.properties.Delegates
+import com.vasilich.commands.monitoring.SystemMonitoringCommand
 
 Configuration
 EnableReactor
@@ -110,6 +110,10 @@ open public class AppContext {
         context!!.outputStream(gossip)
 
         return ChatBotCommand(bot)
+    }
+
+    Bean open fun systemMonitoring() : Command {
+        return SystemMonitoringCommand()
     }
 
 }

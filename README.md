@@ -26,6 +26,9 @@ alt="Vasilich video" width="240" height="180" border="10" /></a>
 - [ ] File sharing. Vasilich should be able to send you logs as a ZIP archive
 - [ ] automate deployment to test environment, where everyone can test Vasilich
 - [ ] Write WIKI. No one can use this without a simple doc!!!
+- [ ] Use programAB instead of ChatterBean
+- [X] Create a single command for monitoring instead of multiple commands
+
 
 # Vasilich and Travis
 [![Build Status](https://travis-ci.org/WonderBeat/vasilich.png?branch=master)](https://travis-ci.org/WonderBeat/vasilich)

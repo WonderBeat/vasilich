@@ -53,11 +53,7 @@
     "chatbot": {
     },
 
-    "disk-usage": {
-        "aliases": ["disk"]
-    },
-
-    "cpu-usage": {
-        "aliases": ["cpu"]
+    "system-monitoring": {
+        "aliases" : ["mon"]
     }
 }
