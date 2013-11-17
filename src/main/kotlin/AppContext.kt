@@ -1,4 +1,5 @@
 package app
+
 import org.springframework.context.annotation.Configuration
 import reactor.spring.context.config.EnableReactor
 import org.springframework.context.annotation.ComponentScan
@@ -41,6 +42,7 @@ import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
+import java.util.Observer
 
 Configuration
 EnableReactor

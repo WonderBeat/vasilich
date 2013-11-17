@@ -25,11 +25,11 @@ public class ExecCommand [Autowired] (private val cfg: ExecCgf,
             return null
         }
         val execResult = shell.exec(scriptUnit.script, cfg.timeout)
-        val output = MessageFormat.format(scriptUnit.output, execResult.output)
+        val resultCode = if(execResult.exitCode == 0) cfg.done else cfg.error
+        val output = array(MessageFormat.format(scriptUnit.output, execResult.output), resultCode)
         return when {
-            output.isEmpty() && execResult.exitCode == 0 -> cfg.done
-            output.isEmpty() -> cfg.error
-            else -> output
+            output.get(0).isEmpty() -> resultCode
+            else -> output.makeString("\n")
         }
     }
 
