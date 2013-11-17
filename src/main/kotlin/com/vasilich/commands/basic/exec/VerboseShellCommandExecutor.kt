@@ -32,6 +32,6 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
             output add line
             processMonitor(line)
         }
-        return ShellOutput(proc.exitValue(), output.toList().makeString("\n"))
+        return ShellOutput(proc.waitFor(), output.toList().makeString("\n"))
     }
 }
