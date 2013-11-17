@@ -1,6 +1,6 @@
 package com.vasilich.commands.basic.exec
 
-public class ShellOutput(val exitCode: Int, val output: String)
+public class ShellOutput(val exitCode: Int, val output: String = "")
 
 public trait ShellCommandExecutor {
     /**

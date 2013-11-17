@@ -53,18 +53,19 @@ class ChatTest extends Specification {
 
         where:
         michalich                   | matcher
-//        'Vasilich, ping'            | 'pong'
-//        'v ping'                    | 'pong'
-//        'v Hi'                      | 'Hello'
-//        'v good Morning!'           | 'Hello'
-//        'v so, Chao'                | 'Bye, see you'
-//        'v are you alive?'          | { assert it != null }
-//        "v what's your uptime"      | { assert it.startsWith('Oh, long enough') }
-//        'v what can you do'         | { assert it.contains('abracadabra') }
-//        'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
-//                                       { assert it == 'Done' }]
+        'Vasilich, ping'            | 'pong'
+        'v ping'                    | 'pong'
+        'v Hi'                      | 'Hello'
+        'v good Morning!'           | 'Hello'
+        'v so, Chao'                | 'Bye, see you'
+        'v are you alive?'          | { assert it != null }
+        "v what's your uptime"      | { assert it.startsWith('Oh, long enough') }
+        'v what can you do'         | { assert it.contains('abracadabra') }
+        'v test exit code detection'| { assert it.contains('Failed') }
+        'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
+                                       { assert it == 'Done' }]
         'v check git version' | { assert it.contains('git version') } // no matter if ping succeeded or not
-//        'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
+        'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
     }
 
 }

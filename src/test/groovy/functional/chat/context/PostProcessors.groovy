@@ -61,7 +61,8 @@ class ScriptExtensionPostProcessor implements BeanPostProcessor, PriorityOrdered
                     def command = it.script.contains(' ') ? it.script : new OsDetails().pickProperScript(it.script)
                     new ExecUnit(it.aliases, command, it.output)} as ExecUnit[],
                     execBean.timeout,
-                    execBean.done
+                    execBean.done,
+                    execBean.error
             )
         } else {
             bean

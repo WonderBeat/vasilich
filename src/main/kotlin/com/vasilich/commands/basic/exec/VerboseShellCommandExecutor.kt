@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import java.util.Scanner
 import java.util.LinkedList
 import org.slf4j.LoggerFactory
+import java.io.IOException
 
 Component
 Config("exec")

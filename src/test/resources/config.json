@@ -55,7 +55,7 @@
 		"scripts": [
 			{
 				"aliases": ["exit code"],
-				"script": "not a script"
+				"script": "src/test/resources/scripts/exit-code"
 			},
 			{
 				"aliases": ["давно работаешь", "your uptime"],

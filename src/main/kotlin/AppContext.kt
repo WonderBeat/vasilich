@@ -1,3 +1,4 @@
+package app
 import org.springframework.context.annotation.Configuration
 import reactor.spring.context.config.EnableReactor
 import org.springframework.context.annotation.ComponentScan
@@ -72,9 +73,9 @@ open public class AppContext {
     }
 
     Bean open fun simpleCommandPostProcessor(configResolver: CommandConfigResolver): BeanPostProcessor {
-        val wrappers = array(aliasMatchCommandDetection(), outputMessageWrapper())
+        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper)
         return CommandPostProcessor(configResolver,
-                wrappers.fold(enableThumblerCommandWrapper(), { one, another -> and(one, another) }))
+                wrappers.fold(enableThumblerCommandWrapper, { one, another -> and(one, another) }))
     }
 
     Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
