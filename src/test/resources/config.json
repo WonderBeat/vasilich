@@ -58,6 +58,10 @@
 				"script": "src/test/resources/scripts/exit-code"
 			},
 			{
+				"aliases": ["not available"],
+				"script": "give USA tank"
+			},
+			{
 				"aliases": ["давно работаешь", "your uptime"],
 				"script": "src/test/resources/uptime",
 				"output": "Oh, long enough: {0}"

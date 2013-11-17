@@ -9,7 +9,6 @@ import org.springframework.core.Ordered
 import org.slf4j.LoggerFactory
 import com.vasilich.commands.api.Command
 import com.vasilich.connectors.xmpp.Topics
-import org.springframework.beans.factory.annotation.Autowired
 
 /**
  * Chain of responsibility. First command, that produces output wins

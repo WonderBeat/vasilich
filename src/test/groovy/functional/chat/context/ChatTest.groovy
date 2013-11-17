@@ -61,6 +61,7 @@ class ChatTest extends Specification {
         'v are you alive?'          | { assert it != null }
         "v what's your uptime"      | { assert it.startsWith('Oh, long enough') }
         'v what can you do'         | { assert it.contains('abracadabra') }
+        'v not available'           | { assert it.contains('Sorry') }
         'v test exit code detection'| { assert it.contains('Failed') }
         'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
                                        { assert it == 'Done' }]

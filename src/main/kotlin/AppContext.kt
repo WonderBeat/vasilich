@@ -27,6 +27,7 @@ import com.vasilich.commands.bootstrap.ReactiveCommandInitializer
 import com.vasilich.commands.api.Command
 import com.vasilich.commands.bootstrap.CommandPostProcessor
 import com.vasilich.commands.bootstrap.outputMessageWrapper
+import com.vasilich.commands.bootstrap.safeCommandWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
 import com.vasilich.commands.basic.exec.ShellCommandExecutor
@@ -75,7 +76,7 @@ open public class AppContext {
     }
 
     Bean open fun simpleCommandPostProcessor(configResolver: CommandConfigResolver): BeanPostProcessor {
-        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper)
+        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper, safeCommandWrapper)
         return CommandPostProcessor(configResolver,
                 wrappers.fold(enableThumblerCommandWrapper, { one, another -> and(one, another) }))
     }
