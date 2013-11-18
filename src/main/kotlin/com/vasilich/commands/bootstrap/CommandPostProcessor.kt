@@ -8,7 +8,8 @@ import com.vasilich.commands.api.Command
 
 public class CommandCfg(val enabled: Boolean = true,
                         val aliases: Array<String> = array(),
-                        val output: String = "")
+                        val output: String = "",
+                        val fail: String = "Sorry, I failed. Check my journal. Tech details: {0}")
 
 fun getNodeName(input: String) : String =
     input.fold("", { akk, data -> when {

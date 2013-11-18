@@ -57,9 +57,12 @@ class ScriptExtensionPostProcessor implements BeanPostProcessor, PriorityOrdered
         if(bean instanceof ExecCgf) {
             ExecCgf execBean = bean as ExecCgf
             new ExecCgf(execBean.scripts.collect {
-                    new ExecUnit(it.aliases, new OsDetails().pickProperScript(it.script), it.output)} as ExecUnit[],
+                    // no need to set extenson if we're going to execute command. Dirty... but fine for tests only
+                    def command = it.script.contains(' ') ? it.script : new OsDetails().pickProperScript(it.script)
+                    new ExecUnit(it.aliases, command, it.output)} as ExecUnit[],
                     execBean.timeout,
-                    execBean.done
+                    execBean.done,
+                    execBean.error
             )
         } else {
             bean

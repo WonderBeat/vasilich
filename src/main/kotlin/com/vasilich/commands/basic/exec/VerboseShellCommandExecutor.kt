@@ -2,10 +2,10 @@ package com.vasilich.commands.basic.exec
 
 import com.vasilich.config.Config
 import org.springframework.stereotype.Component
-import org.springframework.core.io.FileSystemResource
 import java.util.Scanner
 import java.util.LinkedList
 import org.slf4j.LoggerFactory
+import java.io.IOException
 
 Component
 Config("exec")
@@ -21,10 +21,9 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
 
     val logger = LoggerFactory.getLogger(javaClass<VerboseShellCommandExecutor>())!!;
 
-    override fun exec(cmd: String, timeout: Long): String {
-        val resource = FileSystemResource(cmd)
-        val builder = ProcessBuilder(resource.getPath())
-        logger.debug("Exec cmd: ${resource.getPath()}")
+    override fun exec(cmd: String, timeout: Long): ShellOutput {
+        val builder = ProcessBuilder(cmd.split(" ").toList())
+        logger.debug("Exec cmd: ${cmd}")
         val proc = builder.start()
         val scanner = Scanner(proc.getInputStream()!!, "UTF-8")
         val output = LinkedList<String>()
@@ -33,6 +32,6 @@ public class VerboseShellCommandExecutor(private val cfg: VerboseExecuteCfg,
             output add line
             processMonitor(line)
         }
-        return output.toList().makeString("\n")
+        return ShellOutput(proc.waitFor(), output.toList().makeString("\n"))
     }
 }

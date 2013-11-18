@@ -48,16 +48,29 @@ public val outputMessageWrapper: (Command, CommandCfg) -> Command =
         }
     }
 
+public val safeCommandWrapper: (Command, CommandCfg) -> Command =
+    { command, cfg ->
+        object: Command {
+            override fun execute(msg: String): String? {
+                try {
+                    return command.execute(msg)
+                } catch(exception: Exception) {
+                    return MessageFormat.format(cfg.fail, exception.getMessage())
+                }
+            }
+        }
+    }
+
 /**
  * If first command doesn't resolve, then triggers another one
  */
 public fun chainCommands(one: Command, another: Command): Command =
     object: Command {
-            override fun execute(msg: String): String? {
-                val result = one.execute(msg)
-                when(result) {
-                    null -> another.execute(msg)
-                    else -> result
-                }
+        override fun execute(msg: String): String? {
+            val result = one.execute(msg)
+            when(result) {
+                null -> another.execute(msg)
+                else -> result
             }
+        }
     }

@@ -27,6 +27,7 @@ import com.vasilich.commands.bootstrap.ReactiveCommandInitializer
 import com.vasilich.commands.api.Command
 import com.vasilich.commands.bootstrap.CommandPostProcessor
 import com.vasilich.commands.bootstrap.outputMessageWrapper
+import com.vasilich.commands.bootstrap.safeCommandWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
 import com.vasilich.commands.basic.exec.ShellCommandExecutor
@@ -43,6 +44,7 @@ import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
 import com.vasilich.commands.monitoring.SystemMonitoringCommand
+import java.util.Observer
 
 Configuration
 EnableReactor
@@ -75,7 +77,7 @@ open public class AppContext {
     }
 
     Bean open fun simpleCommandPostProcessor(configResolver: CommandConfigResolver): BeanPostProcessor {
-        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper)
+        val wrappers = array(aliasMatchCommandDetection, outputMessageWrapper, safeCommandWrapper)
         return CommandPostProcessor(configResolver,
                 wrappers.fold(enableThumblerCommandWrapper, { one, another -> and(one, another) }))
     }
@@ -95,25 +97,15 @@ open public class AppContext {
     }
 
     Bean open fun rootReactor(env: Environment): Observable {
-        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!
+        return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!;
     }
 
     Lazy
-    Bean open fun chatBot(): Command {
-        val aimlResources = loadAimsFromClasspath("classpath:/Bots/Alice/*.aiml")
-        val bot = ChatBotLoader.createBot(
-                ClassPathResource("/Bots/context.xml").getInputStream(),
-                ClassPathResource("/Bots/splitters.xml").getInputStream(),
-                ClassPathResource("/Bots/substitutions.xml").getInputStream(), aimlResources)
-        val context = bot!!.getContext()
-        val gossip = ByteArrayOutputStream()
-        context!!.outputStream(gossip)
-
-        return ChatBotCommand(bot)
+    Bean open fun chatBot(): ChatBotCommand {
+        return ChatBotCommand("classpath:/Bots/Alice/*.aiml", "/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml")
     }
-
+    
     Bean open fun systemMonitoring() : Command {
         return SystemMonitoringCommand()
     }
-
 }

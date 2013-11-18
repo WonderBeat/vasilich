@@ -6,7 +6,7 @@ class CommandWrappersTest extends Specification {
 
     def cfg(Map map, enabled = false, aliases = [], outputFormatter = '' ) {
         new CommandCfg(map.enabled ?: enabled , (map.aliases ?: aliases) as String[],
-                map.outputFormatter ?: outputFormatter)
+                map.outputFormatter ?: outputFormatter, 'fail: {0}')
     }
 
     def 'wrappers should prevent command execution if conditionals match'() {

@@ -11,5 +11,5 @@ script: mvn deploy
 
 after_success:
   - chmod +x deploy.sh
-  - ./deploy.sh
+  #- ./deploy.sh
 
