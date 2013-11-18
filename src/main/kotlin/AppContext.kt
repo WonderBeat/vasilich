@@ -101,17 +101,7 @@ open public class AppContext {
 
     Lazy
     Bean open fun chatBot(): ChatBotCommand {
-        val aimlResources = loadAimsFromClasspath("classpath:/Bots/Alice/*.aiml")
-        val bot = ChatBotLoader.createBot(
-                ClassPathResource("/Bots/context.xml").getInputStream(),
-                ClassPathResource("/Bots/splitters.xml").getInputStream(),
-                ClassPathResource("/Bots/substitutions.xml").getInputStream(), aimlResources)
-        val context = bot!!.getContext();
-        val gossip = ByteArrayOutputStream()
-        context!!.outputStream(gossip);
-
-
-        return ChatBotCommand(bot)
+        return ChatBotCommand("classpath:/Bots/Alice/*.aiml", "/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml")
     }
 
 }
