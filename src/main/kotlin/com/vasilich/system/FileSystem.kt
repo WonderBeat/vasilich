@@ -1,10 +1,8 @@
 package com.vasilich.system
 
-import org.springframework.context.annotation.Bean
 import java.nio.file.FileStore
 import java.nio.file.FileSystems
 import java.util.ArrayList
-import org.apache.commons.lang3.SystemUtils
 
 /**
  *
@@ -20,8 +18,19 @@ enum class Size (val k: Long) {
     }
 }
 
-public class Disk(val name: String? = "", val total: Long, val available: Long, val used: Long) {
+public class Disk(val fs : FileStore) {
 
+    val name : String
+    get() = fs.name()!!
+
+    val total : Long
+    get() = fs.getTotalSpace()
+
+    val available : Long
+    get() = fs.getTotalSpace() - fs.getUnallocatedSpace()
+
+    val used : Long
+    get() = fs.getUsableSpace()
     /*fun name: String {
         if (SystemUtils.IS_OS_WINDOWS) {
             return name!!.split("\\s").filter {
@@ -33,15 +42,13 @@ public class Disk(val name: String? = "", val total: Long, val available: Long, 
 
 public class FileSystem {
 
-    var disks: ArrayList<Disk>;
+    val disks: ArrayList<Disk>;
     {
         val fs = FileSystems.getDefault()!!
         val stores = fs.getFileStores()!!
         disks = ArrayList()
         for (store in stores) {
-            val disk = Disk(store.name(), store.getTotalSpace(),
-                    store.getTotalSpace() - store.getUnallocatedSpace(),
-                    store.getUsableSpace())
+            val disk = Disk(store)
             disks.add(disk)
         }
     }

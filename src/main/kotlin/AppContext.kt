@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
+import com.vasilich.commands.monitoring.SystemMonitoringCommand
 import java.util.Observer
 
 Configuration
@@ -103,5 +104,8 @@ open public class AppContext {
     Bean open fun chatBot(): ChatBotCommand {
         return ChatBotCommand("classpath:/Bots/Alice/*.aiml", "/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml")
     }
-
+    
+    Bean open fun systemMonitoring() : Command {
+        return SystemMonitoringCommand()
+    }
 }

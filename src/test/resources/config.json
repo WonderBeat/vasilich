@@ -91,8 +91,8 @@
         }
     },
 
-    "disk-usage": {
-        "aliases" : ["disk"]
+    "system-monitoring": {
+        "aliases" : ["mon"]
     }
 
 }
