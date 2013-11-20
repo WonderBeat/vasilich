@@ -51,6 +51,15 @@
 		]
 	},
 
+	"monitoring": {
+		"chat": [
+			{
+				"say": "ping",
+				"reply": "answer.contains(\"pong\")"
+			}
+		]
+	},
+
 	"exec": {
 		"scripts": [
 			{

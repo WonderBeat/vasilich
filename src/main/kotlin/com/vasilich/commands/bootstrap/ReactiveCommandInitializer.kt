@@ -11,35 +11,20 @@ import com.vasilich.commands.api.Command
 import com.vasilich.connectors.xmpp.Topics
 
 /**
- * Chain of responsibility. First command, that produces output wins
- */
-private fun chainCommandsByOrder(commands: List<Command>, defaultCommandOrder: Int = 50): Command {
-    fun Iterable<Command>.byOrder(): List<Command> = this.sortBy {
-        when(it) {
-            is Ordered -> it.getOrder()
-            else -> defaultCommandOrder
-        }
-    }
-    return commands.byOrder() reduce ::chainCommands
-}
-
-/**
  * Grabs all available commands, sorts them by priority and listens to events
  * On event, passes it through the chain of commands, looking for the first one, that can process it
  */
 public class ReactiveCommandInitializer (private val reactor: Observable,
-                                                     commands: List<Command>,
+                                         private val command: Command,
                                                      private val topics: Topics = Topics()) {
 
     val logger = LoggerFactory.getLogger(this.javaClass)!!;
-
-    val commandComposite = chainCommandsByOrder(commands)
 
     PostConstruct
     private fun makeReactive() {
         reactor.on(Selectors.`$`(topics.receive), Consumer<Event<String>> {
             val msg = it!!.getData()!!
-            val response = commandComposite execute msg
+            val response = command execute msg
             if(response != null) {
                 logger.debug("Chat: ${msg} -> ${response}")
                 reactor.notify(topics.send, Event.wrap(response))

@@ -1,6 +1,6 @@
 package com.vasilich.monitoring
 
-private class RequestReplyMatcher(val request: String, val replyMatcher: (String) -> Boolean, val explanation: String)
+class RequestReplyMatcher(val request: String, val replyMatcher: (String) -> Boolean, val explanation: String)
 
 fun createRequestReplyMatchers(requestReply: Collection<RequestReplyMonitoringCfg>,
                                matcherBuilder: (String) -> ((String) -> Boolean))

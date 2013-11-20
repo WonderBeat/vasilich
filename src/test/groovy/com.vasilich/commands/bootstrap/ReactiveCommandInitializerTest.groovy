@@ -1,5 +1,6 @@
 package com.vasilich.commands.bootstrap
 
+import app.AppPackage
 import com.vasilich.commands.api.Command
 import org.springframework.core.Ordered
 import spock.lang.Specification
@@ -18,7 +19,7 @@ class ReactiveCommandInitializerTest extends Specification {
         cmd.execute(_) >> "unordered wins"
 
         when:
-        def chained = BootstrapPackage.chainCommandsByOrder([orderedCmd, cmd], 50)
+        def chained = AppPackage.chainCommandsByOrder([orderedCmd, cmd], 50)
         def output = chained.execute("useless input")
 
         then:

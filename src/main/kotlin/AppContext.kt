@@ -37,14 +37,32 @@ import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
 import com.vasilich.commands.chatbot.ChatBotCommand
-import com.vasilich.commands.chatbot.loadAimsFromClasspath
-import com.vasilich.commands.chatbot.ChatBotLoader
-import java.io.ByteArrayOutputStream
 import org.springframework.context.annotation.Lazy
 import com.vasilich.connectors.xmpp.createAliasDetectorFilter
 import com.vasilich.connectors.chat.VasilichCfg
-import com.vasilich.commands.monitoring.SystemMonitoringCommand
-import java.util.Observer
+import com.vasilich.monitoring.RequestReplyScheduledMonitoringRegistar
+import com.vasilich.monitoring.MonitoringCfg
+import com.vasilich.connectors.xmpp.Topics
+import com.vasilich.monitoring.RequestReplyMatcher
+import com.vasilich.monitoring.createRequestReplyMatchers
+import com.vasilich.monitoring.elMatcher
+import org.springframework.core.Ordered
+import com.vasilich.commands.bootstrap.chainCommands
+import com.vasilich.monitoring.MonitoringRegistrar
+import org.springframework.scheduling.config.ScheduledTaskRegistrar
+
+/**
+ * Chain of responsibility. First command, that produces output wins
+ */
+fun chainCommandsByOrder(commands: List<Command>, defaultCommandOrder: Int = 50): Command {
+    fun Iterable<Command>.byOrder(): List<Command> = this.sortBy {
+        when(it) {
+            is Ordered -> it.getOrder()
+            else -> defaultCommandOrder
+        }
+    }
+    return commands.byOrder() reduce ::chainCommands
+}
 
 Configuration
 EnableReactor
@@ -83,7 +101,7 @@ open public class AppContext {
     }
 
     Bean open fun reactiveCommandInitializer(reactor: Observable, commands: List<Command>): ReactiveCommandInitializer {
-        return ReactiveCommandInitializer(reactor, commands)
+        return ReactiveCommandInitializer(reactor, chainCommandsByOrder(commands))
     }
 
     Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
@@ -98,6 +116,23 @@ open public class AppContext {
 
     Bean open fun rootReactor(env: Environment): Observable {
         return Reactors.reactor()!!.env(env)!!.dispatcher(ThreadPoolExecutorDispatcher(3, 10))!!.get()!!;
+    }
+
+    Bean open fun scheduler(): ScheduledTaskRegistrar = ScheduledTaskRegistrar()
+
+    Bean open fun monitoringCfg(): MonitoringCfg = MonitoringCfg()
+
+    Bean open fun requestReplyMonitoring(cfg : MonitoringCfg, reactor: Observable,
+                                         commands: List<Command>, schedulerRegistar: ScheduledTaskRegistrar): MonitoringRegistrar? = when {
+        cfg.chat.empty -> null
+        else -> object: RequestReplyScheduledMonitoringRegistar {
+            override val scheduler: ScheduledTaskRegistrar = schedulerRegistar
+            override val cfg: MonitoringCfg = cfg
+            override val reactor: Observable = reactor
+            override val topics: Topics = Topics()
+            override val matchers: Collection<RequestReplyMatcher> = createRequestReplyMatchers(cfg.chat, ::elMatcher)
+            override val command: Command = chainCommandsByOrder(commands)
+        }
     }
 
     Lazy

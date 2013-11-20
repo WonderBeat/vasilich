@@ -1,5 +1,6 @@
-package functional.chat.context
+package functional.chat
 import app.AppContext
+import functional.chat.context.SpringChatContext
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.context.ContextConfiguration
