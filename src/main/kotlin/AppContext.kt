@@ -104,8 +104,4 @@ open public class AppContext {
     Bean open fun chatBot(): ChatBotCommand {
         return ChatBotCommand("classpath:/Bots/Alice/*.aiml", "/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml")
     }
-    
-    Bean open fun systemMonitoring() : Command {
-        return SystemMonitoringCommand()
-    }
 }
