@@ -5,11 +5,11 @@ jdk:
 env:
   global:
     # PASSWORD=pwd
-    secure: "RwQ1Fxe/O4PxdvsJjiPFoAUuX/pqNLAxAr5dBCK7cx+DpXtnYMAk2MRgdr2ih03B+tU55LzZKi1BCzALlt9v/77FpO4foz2c5/WPlK9my7Xic+U+1aoiG9FEFR9loLu/3S/mNfEXc/nwgu/dtttwYb2enApri65PUMaIoui3SLQ="
+    secure: "KIOM1785IynPBAwPvC0Qn/KX9F17hupjZLTGiC/cMH433cQpsmBl1fFSmKdUMCCe5X4mimi/ZcZwVSb4Kg/oGKs57w7oOKthV7fTU5gtSOWnAa9ks0KGx27uuddPyo3TF4BQMlaABOPylAdFIobVdTRjng4a0drAJK2kxQxpeUo="
 
 script: mvn deploy
 
 after_success:
   - chmod +x deploy.sh
-  #- ./deploy.sh
+  - ./deploy.sh
 
