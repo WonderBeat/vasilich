@@ -15,6 +15,9 @@ Vasilich demo instance is running on:
 " target="_blank"><img src="http://img.youtube.com/vi/I45GREV7PsY/0.jpg" 
 alt="Vasilich video" width="240" height="180" border="10" /></a>
 
+# Download
+Current snapshot: [Download](https://dl.dropboxusercontent.com/u/11499876/vasilich/vasilich-alpha.jar)
+
 # RoadMap
 - [X] Trigger script execution
 - [X] Chat Bot backend (if no command found, Vasilich should reply as a simple chat-bot)
