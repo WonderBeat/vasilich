@@ -8,6 +8,11 @@ fun createRequestReplyMatchers(requestReply: Collection<RequestReplyMonitoringCf
         requestReply.map { entry -> RequestReplyMatcher(entry.say, matcherBuilder(entry.reply), entry.explanation) }
 
 
+/**
+ * Like in a real chat this monitoring impl. will send Vasilich a message [configurable] and get a response
+ * Executing matchers we can check if everything is OK
+ * If, not, we will send a message with explanations
+ */
 public trait RequestReplyMonitor: CommandMonitoring {
 
     val matchers: Collection<RequestReplyMatcher>
