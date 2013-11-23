@@ -23,7 +23,7 @@ Current snapshot: [Download](https://dl.dropboxusercontent.com/u/11499876/vasili
 - [X] Chat Bot backend (if no command found, Vasilich should reply as a simple chat-bot)
 - [X] Extended script execution (interactive mode. Vasilich should notify about script execution process)
 - [X] Webhook support
-- [ ] Monitoring and Scheduling
+- [X] Monitoring and Scheduling
 - [X] Single Jar packaging. Vasilich should be as simple as possible. (One JAR and one configuration file)
 - [ ] IRC connector
 - [ ] File sharing. Vasilich should be able to send you logs as a ZIP archive
@@ -39,9 +39,9 @@ Current snapshot: [Download](https://dl.dropboxusercontent.com/u/11499876/vasili
 # Hackaton RoadMap
 - [X] Install & Setup
 - [X] Hello, Vasilich! - Basic Talk module
-- [X ] Live talk module integration
+- [X] Live talk module integration
 - [X] Script execution (echo + sleep). Generic functionality.
-- [ ] Monitoring ops (disk space usage, cpu usage, proc #, thread #, etc.)
+- [X] Monitoring ops (disk space usage, cpu usage, proc #, thread #, etc.)
 - [ ] Alerting (e.g. disk space < 500 MB)
 - [?] View logs in chat - "give last N ERRORs"
 - [ ] Presentation
