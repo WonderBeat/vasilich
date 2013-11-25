@@ -50,6 +50,11 @@ import org.springframework.core.Ordered
 import com.vasilich.commands.bootstrap.chainCommands
 import com.vasilich.monitoring.MonitoringRegistrar
 import org.springframework.scheduling.config.ScheduledTaskRegistrar
+import com.vasilich.monitoring.MonitoringThrottler
+import com.google.common.cache.Cache
+import com.google.common.cache.CacheBuilder
+import java.util.concurrent.TimeUnit
+import com.vasilich.monitoring.RequestReplyMonitor
 
 /**
  * Chain of responsibility. First command, that produces output wins
@@ -125,7 +130,11 @@ open public class AppContext {
     Bean open fun requestReplyMonitoring(cfg : MonitoringCfg, reactor: Observable,
                                          commands: List<Command>, schedulerRegistar: ScheduledTaskRegistrar): MonitoringRegistrar? = when {
         cfg.chat.empty -> null
-        else -> object: RequestReplyScheduledMonitoringRegistar {
+        else -> object: RequestReplyScheduledMonitoringRegistar, MonitoringThrottler {
+            override fun check(): Collection<String> = super<MonitoringThrottler>.check()
+            override val throttlerCache: Cache<String, Unit> = CacheBuilder.newBuilder()!!.maximumSize(20)!!
+                    .expireAfterWrite(2, TimeUnit.MINUTES)!!.build()!!
+            override val criticalDistance: Int = 3
             override val scheduler: ScheduledTaskRegistrar = schedulerRegistar
             override val cfg: MonitoringCfg = cfg
             override val reactor: Observable = reactor
