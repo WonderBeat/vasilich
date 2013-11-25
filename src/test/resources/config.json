@@ -102,6 +102,15 @@
 
     "system-monitoring": {
         "aliases" : ["mon"]
+    },
+
+    "delayed": {
+        "aliases" : ["delay"],
+        "enabled"  : true,
+        "initialDelay" : 0,
+        "delay" : 1,
+        "timeUnit" : "SECONDS"
     }
+
 
 }
