@@ -17,7 +17,7 @@ alt="Vasilich video" width="240" height="180" border="10" /></a>
 
 # Download
 Current snapshot: [Download](https://dl.dropboxusercontent.com/u/11499876/vasilich/vasilich-alpha.jar)  
-Check our [WIKI](https://github.com/WonderBeat/vasilich/wiki) to learn how to set up your own Vasilich [Link](https://github.com/WonderBeat/vasilich/wiki)
+Check our [WIKI](https://github.com/WonderBeat/vasilich/wiki) and learn how to set up your own Vasilich
 
 # RoadMap
 - [X] Trigger script execution
