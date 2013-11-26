@@ -50,7 +50,7 @@ public class DelayedCommand [Autowired] (val cfg : DelayedCommandCfg, val chat: 
 
     val queue: BlockingQueue<DelayedItem> = DelayQueue<DelayedItem>()
 
-    val pattern : Pattern = Pattern.compile("(Vasilich)?\\s*,\\s*delay\\s+(\\d+)\\s+([a-zA-Z]+)\\s*,\\s*(.+)")
+    val pattern : Pattern = Pattern.compile("\\s*,\\s*delay\\s+(\\d+)\\s+([a-zA-Z]+)\\s*,\\s*(.+)")
 
     val usageMsg = "Usage: delay <amount> <sec|min|hour> , <command>\nExample: delay 5 sec, ping"
 
@@ -66,10 +66,10 @@ public class DelayedCommand [Autowired] (val cfg : DelayedCommandCfg, val chat: 
 
         val matcher = pattern.matcher(msg)
         if (matcher.matches()) {
-            val delay:Long = matcher.group(2)!!.toLong()
-            val unit = getTimeUnit(matcher.group(3)!!)
+            val delay:Long = matcher.group(1)!!.toLong()
+            val unit = getTimeUnit(matcher.group(2)!!)
             if (unit == null) return usageMsg
-            val command = matcher.group(4)
+            val command = matcher.group(3)
             val result = queue.offer(DelayedItem(
                     Runnable {
                         chat.send("Vasilich, $command")
@@ -78,7 +78,7 @@ public class DelayedCommand [Autowired] (val cfg : DelayedCommandCfg, val chat: 
             return if (result) "Your command: \"$command\" has been added to the queue and will be executed in $delay $unit"
                 else "Your command \"$command\" wasn't added to the queue, please try again"
         } else {
-            return usageMsg
+            return null
         }
     }
 
