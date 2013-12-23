@@ -36,6 +36,7 @@ Check our [WIKI](https://github.com/WonderBeat/vasilich/wiki) and learn how to s
 
 # Vasilich and Travis
 [![Build Status](https://travis-ci.org/WonderBeat/vasilich.png?branch=master)](https://travis-ci.org/WonderBeat/vasilich)
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/896beac3cb593d4a48451b5970602cea "githalytics.com")](http://githalytics.com/WonderBeat/vasilich)
 
 # Hackaton RoadMap
 - [X] Install & Setup
