@@ -54,3 +54,7 @@ Check our [WIKI](https://github.com/WonderBeat/vasilich/wiki) and learn how to s
 3. Easy to Setup - 1 jar, 1 configuration file
 4. Flexible - script execution Module
 5. Many ways to grow up
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/WonderBeat/vasilich/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
