@@ -10,10 +10,10 @@ public class SchedulerPostProcessor: BeanPostProcessor {
 
     val tastExecutor = ThreadPoolTaskExecutor()
 
-    override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
-        return bean
+    override fun postProcessBeforeInitialization(p0: Any?, beanName: String?): Any? {
+        return p0
     }
-    override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? {
-        return bean
+    override fun postProcessAfterInitialization(p0: Any?, beanName: String?): Any? {
+        return p0
     }
 }
