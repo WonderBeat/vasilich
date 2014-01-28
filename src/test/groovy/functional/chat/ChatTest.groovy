@@ -29,7 +29,7 @@ class ChatTest extends Specification {
 
     private String waitReply() {
         def promise = Promises.defer().get()
-        reactor.on(Selectors.$('test-recieve'), { promise.acceptEvent(it) } as Consumer<Event<String>>)
+        reactor.on(Selectors.$('test-receive'), { promise.acceptEvent(it) } as Consumer<Event<String>>)
         promise.compose().onError({ log.error("Test failed", it) } as Consumer<Exception>)
         promise.compose().await(timeout, TimeUnit.SECONDS)
     }
@@ -68,6 +68,8 @@ class ChatTest extends Specification {
                                        { assert it == 'Done' }]
         'v check git version' | { assert it.contains('git version') } // no matter if ping succeeded or not
         'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
+        "v ansible version"      | { assert it != null }
+        "v ansible deploy"      | { assert it != null }
     }
 
 }

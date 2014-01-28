@@ -4,13 +4,13 @@ import com.vasilich.os.OsDetails
 import jet.Function1
 import spock.lang.Specification
 
-class VerboseExecTest extends Specification {
+class BaseShellCommandExecTest extends Specification {
 
 
-    def 'during verbose script execution Vasilich should process output partyally'() {
+    def 'during verbose script execution Vasilich should process output partially'() {
         given:
         Function1 processor = Mock()
-        def executor = new VerboseShellCommandExecutor(new VerboseExecuteCfg(['VSLC'] as String[]), processor)
+        def executor = new BaseShellCommandExecutor(processor)
 
         when:
         String output = executor.exec(new OsDetails().pickProperScript("src/test/resources/scripts/long-run"), 5)

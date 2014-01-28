@@ -1,5 +1,6 @@
 package functional.chat.context
 
+import com.vasilich.commands.exec.AnsibleCgf
 import com.vasilich.commands.exec.ExecCgf
 import com.vasilich.commands.exec.ExecUnit
 import com.vasilich.connectors.xmpp.XmppConf
@@ -39,15 +40,6 @@ class ScriptExtensionPostProcessor implements BeanPostProcessor, PriorityOrdered
     @Override
     int getOrder() { Ordered.HIGHEST_PRECEDENCE - 1 }
 
-    /*
-            is ExecCgf -> {
-            ExecCgf(bean.scripts.map { ExecUnit(it.aliases, OsDetails.pickProperScript(it.script), it.output) }.copyToArray(),
-                    bean.timeout,
-                    bean.done)
-        }
-        else -> bean
-     */
-
     @Override
     Object postProcessBeforeInitialization(Object bean, String s) throws BeansException
     { bean }
@@ -57,13 +49,23 @@ class ScriptExtensionPostProcessor implements BeanPostProcessor, PriorityOrdered
         if(bean instanceof ExecCgf) {
             ExecCgf execBean = bean as ExecCgf
             new ExecCgf(execBean.scripts.collect {
-                    // no need to set extenson if we're going to execute command. Dirty... but fine for tests only
+                    // no need to set extension if we're going to execute command. Dirty... but fine for tests only
                     def command = it.script.contains(' ') ? it.script : new OsDetails().pickProperScript(it.script)
                     new ExecUnit(it.aliases, command, it.output)} as ExecUnit[],
                     execBean.timeout,
                     execBean.done,
                     execBean.error
             )
+        } else if(bean instanceof AnsibleCgf) { // copy-paste for Ansible, not cool, agree, to be cleaned later
+                AnsibleCgf ansibleCgf = bean as AnsibleCgf
+                new AnsibleCgf(ansibleCgf.scripts.collect {
+                    // no need to set extension if we're going to execute command. Dirty... but fine for tests only
+                    def command = it.script.contains(' ') ? it.script : new OsDetails().pickProperScript(it.script)
+                    new ExecUnit(it.aliases, command, it.output)} as ExecUnit[],
+                        ansibleCgf.timeout,
+                        ansibleCgf.done,
+                        ansibleCgf.error
+                )
         } else {
             bean
         }

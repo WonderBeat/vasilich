@@ -31,9 +31,9 @@ import com.vasilich.commands.bootstrap.safeCommandWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
 import com.vasilich.commands.exec.ShellCommandExecutor
-import com.vasilich.commands.exec.VerboseExecuteCfg
-import com.vasilich.commands.exec.VerboseShellCommandExecutor
-import com.vasilich.commands.exec.createMarkerBasedNotificator
+import com.vasilich.commands.exec.MarkerBasedMonitorCfg
+import com.vasilich.commands.exec.BaseShellCommandExecutor
+import com.vasilich.commands.exec.createMarkerBasedMonitor
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
 import com.vasilich.commands.chatbot.ChatBotCommand
@@ -55,6 +55,10 @@ import com.google.common.cache.CacheBuilder
 import java.util.concurrent.TimeUnit
 import java.util.Comparator
 import com.vasilich.monitoring.stringDistanceComparator
+import com.vasilich.commands.exec.AnsibleCgf
+import com.vasilich.commands.exec.ExecCommand
+import com.vasilich.commands.exec.ExecCgf
+import com.vasilich.commands.exec.createAnsibleMonitor
 
 /**
  * Chain of responsibility. First command, that produces output wins
@@ -109,8 +113,14 @@ open public class AppContext {
         return ReactiveCommandInitializer(reactor, chainCommandsByOrder(commands))
     }
 
-    Bean open fun shellExec(reactor: Observable, cfg: VerboseExecuteCfg): ShellCommandExecutor {
-        return VerboseShellCommandExecutor(cfg, createMarkerBasedNotificator(cfg.marker, reactor))
+    Bean open fun shellExec(reactor: Observable, cfg: MarkerBasedMonitorCfg): ShellCommandExecutor {
+        return BaseShellCommandExecutor(createMarkerBasedMonitor(cfg.marker, reactor))
+    }
+
+    Bean open fun ansibleExec(reactor: Observable, cfg: AnsibleCgf): Command {
+        return ExecCommand(
+                ExecCgf(cfg.scripts, cfg.timeout, cfg.done, cfg.error),
+                BaseShellCommandExecutor(createAnsibleMonitor(reactor)))
     }
 
     Bean open fun chat(cfg: XmppConf, vasilichCfg: VasilichCfg, reactor: Observable): Chat<Message> {
