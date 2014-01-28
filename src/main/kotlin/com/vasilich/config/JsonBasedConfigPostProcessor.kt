@@ -20,21 +20,21 @@ Retention(RetentionPolicy.RUNTIME) annotation class Config(val value: String)
 public class JsonBasedConfigPostProcessor(private val appCfg: JsonNode,
                                  private val jsonMapper: ObjectMapper): BeanPostProcessor, PriorityOrdered {
 
-    override fun postProcessBeforeInitialization(bean: Any?, beanName: String?): Any? {
-        return bean
+    override fun postProcessBeforeInitialization(p0: Any?, p1: String?): Any? {
+        return p0
     }
 
-    override fun postProcessAfterInitialization(bean: Any?, beanName: String?): Any? {
-        val annotation = bean.javaClass.getAnnotation(javaClass<Config>())
+    override fun postProcessAfterInitialization(p0: Any?, p1: String?): Any? {
+        val annotation = p0.javaClass.getAnnotation(javaClass<Config>())
         if(annotation == null) {
-            return bean
+            return p0
         }
         val node = appCfg.get(annotation.value)
         val obj = jsonMapper.convertValue(node, javaClass<ObjectNode>())
         if(obj == null) {
-            return bean
+            return p0
         }
-        return jsonMapper.readValue(obj.traverse(), bean!!.javaClass)
+        return jsonMapper.readValue(obj.traverse(), p0!!.javaClass)
     }
 
     override fun getOrder(): Int {
