@@ -17,7 +17,7 @@ trait MonitoringRegistrar {
 }
 
 
-trait RequestReplyScheduledMonitoringRegistar: MonitoringRegistrar, RequestReplyMonitor {
+trait RequestReplyScheduledMonitoringRegistar: MonitoringRegistrar, RequestReplyMonitor<String> {
 
     val scheduler: ScheduledTaskRegistrar
 

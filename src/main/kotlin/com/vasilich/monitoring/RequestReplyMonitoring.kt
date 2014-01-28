@@ -13,7 +13,7 @@ fun createRequestReplyMatchers(requestReply: Collection<RequestReplyMonitoringCf
  * Executing matchers we can check if everything is OK
  * If, not, we will send a message with explanations
  */
-public trait RequestReplyMonitor: CommandMonitoring {
+public trait RequestReplyMonitor<T>: CommandMonitoring {
 
     val matchers: Collection<RequestReplyMatcher>
 

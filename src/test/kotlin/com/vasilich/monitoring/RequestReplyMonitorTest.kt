@@ -8,7 +8,7 @@ import org.hamcrest.CoreMatchers
 class RequestReplyMonitorTest {
 
     Test fun monitoringShouldReturnNothingIfOK() {
-        val monitoring = object: RequestReplyMonitor {
+        val monitoring = object: RequestReplyMonitor<String> {
             override val matchers = createRequestReplyMatchers(
                     listOf(RequestReplyMonitoringCfg("ping", "answer.isEmpty()", "ping should reply with pong")),
                     ::elMatcher)
@@ -18,7 +18,7 @@ class RequestReplyMonitorTest {
     }
 
     Test fun monitoringShouldReturnExplanationIfFailed() {
-        val monitoring = object: RequestReplyMonitor {
+        val monitoring = object: RequestReplyMonitor<String> {
             override val matchers = createRequestReplyMatchers(
                     listOf(RequestReplyMonitoringCfg("ping", "!answer.isEmpty()", "ping should reply with pong")),
                     ::elMatcher)
