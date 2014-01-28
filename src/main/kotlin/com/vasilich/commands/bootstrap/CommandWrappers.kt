@@ -68,7 +68,7 @@ public fun chainCommands(one: Command, another: Command): Command =
     object: Command {
         override fun execute(msg: String): String? {
             val result = one.execute(msg)
-            when(result) {
+            return when(result) {
                 null -> another.execute(msg)
                 else -> result
             }
