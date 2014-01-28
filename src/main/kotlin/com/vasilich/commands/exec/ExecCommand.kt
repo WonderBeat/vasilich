@@ -1,4 +1,4 @@
-package com.vasilich.commands.basic.exec
+package com.vasilich.commands.exec
 
 import org.springframework.stereotype.Component
 import com.vasilich.config.Config

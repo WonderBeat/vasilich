@@ -1,4 +1,4 @@
-package com.vasilich.commands.basic.exec
+package com.vasilich.commands.exec
 
 import com.vasilich.os.OsDetails
 import jet.Function1

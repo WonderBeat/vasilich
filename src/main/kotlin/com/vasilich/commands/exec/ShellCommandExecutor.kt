@@ -1,4 +1,4 @@
-package com.vasilich.commands.basic.exec
+package com.vasilich.commands.exec
 
 public class ShellOutput(val exitCode: Int, val output: String = "")
 
