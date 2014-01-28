@@ -5,5 +5,5 @@ package com.vasilich.connectors.chat
  */
 public trait Chat<T> {
     fun send(msg: String)
-    fun recieve(callback: (msg: T) -> Unit)
+    fun receive(callback: (msg: T) -> Unit)
 }

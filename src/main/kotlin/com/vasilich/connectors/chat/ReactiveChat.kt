@@ -20,7 +20,7 @@ public class ReactiveChat(private val chat: Chat<Message>,
             chat.send(it!!.getData()!!)
         })
 
-        chat.recieve {
+        chat.receive {
             reactor.notify(topics.receive, Event.wrap(it.getBody()))
         }
     }
