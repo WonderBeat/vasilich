@@ -152,6 +152,6 @@ open public class AppContext {
 
     Lazy
     Bean open fun chatBot(): ChatBotCommand {
-        return ChatBotCommand("classpath:/Bots/Alice/*.aiml", "/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml")
+        return ChatBotCommand("/Bots/context.xml", "/Bots/splitters.xml", "/Bots/substitutions.xml", "classpath:/Bots/Alice/*.aiml")
     }
 }
