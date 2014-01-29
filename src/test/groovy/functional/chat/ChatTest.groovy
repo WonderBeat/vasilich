@@ -55,23 +55,29 @@ class ChatTest extends Specification {
 
         where:
         michalich                   | matcher
+        // Base Talk
         'Vasilich, ping'            | 'pong'
         'v ping'                    | 'pong'
         'v Hi'                      | 'Hello'
         'v good Morning!'           | 'Hello'
         'v so, Chao'                | 'Bye, see you'
-        'v are you alive?'          | { assert it != null }
+        'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
+        // Other Basics
         "v what's your uptime"      | { assert it.startsWith('Oh, long enough') }
         'v what can you do'         | { assert it.contains('abracadabra') }
+        // Exec
         'v not available'           | { assert it.contains('Sorry') }
         'v test exit code detection'| { assert it.contains('Failed') }
         'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
                                        { assert it == 'Done' }]
         'v check git version'       | { assert it.contains('git version') } // no matter if ping succeeded or not
-        'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
-        'v last'                    |  { assert it.contains('Vasilich, Do you know any good IT place to work in Spb?')}
+        // Exec: Ansible
         "v ansible version"      | { assert it.startsWith('ansible') }
         "v ansible deploy"      | { assert it.equalsIgnoreCase('Done') }
+        // History
+        'v last'                    |  { assert it.contains('Vasilich, Do you know any good IT place to work in Spb?')}
+        // Talk module
+        'v are you alive?'          | { assert it != null }
     }
 
 }
