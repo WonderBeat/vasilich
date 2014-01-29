@@ -66,8 +66,10 @@ class ChatTest extends Specification {
         'v test exit code detection'| { assert it.contains('Failed') }
         'v launch verbose script'   | [{ assert it.startsWith('Invisible exception')},
                                        { assert it == 'Done' }]
-        'v check git version' | { assert it.contains('git version') } // no matter if ping succeeded or not
+        'v check git version'       | { assert it.contains('git version') } // no matter if ping succeeded or not
         'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
+        'v last'                    |  {assert it.contains('Vasilich, Do you know any good IT place to work in Spb?')}
+
     }
 
 }

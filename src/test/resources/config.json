@@ -20,6 +20,9 @@
 	"ping": {
 		"aliases": ["ping"]
 	},
+	"history": {
+		"aliases": ["last"]
+	},
 
 	"chat-bot": {
 	},

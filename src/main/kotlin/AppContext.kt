@@ -30,10 +30,10 @@ import com.vasilich.commands.bootstrap.outputMessageWrapper
 import com.vasilich.commands.bootstrap.safeCommandWrapper
 import com.vasilich.commands.bootstrap.and
 import com.vasilich.commands.bootstrap.aliasMatchCommandDetection
-import com.vasilich.commands.exec.ShellCommandExecutor
-import com.vasilich.commands.exec.VerboseExecuteCfg
-import com.vasilich.commands.exec.VerboseShellCommandExecutor
-import com.vasilich.commands.exec.createMarkerBasedNotificator
+import com.vasilich.commands.basic.exec.ShellCommandExecutor
+import com.vasilich.commands.basic.exec.VerboseExecuteCfg
+import com.vasilich.commands.basic.exec.VerboseShellCommandExecutor
+import com.vasilich.commands.basic.exec.createMarkerBasedNotificator
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.AbstractResource
 import com.vasilich.commands.chatbot.ChatBotCommand

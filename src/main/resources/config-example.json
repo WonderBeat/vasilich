@@ -36,6 +36,9 @@
 	"ping": {
 		"aliases": ["ping"]
 	},
+	"history": {
+		"aliases": ["last"]
+	},
 
 	"date-time": {
 		"aliases": ["который час", "time", "what time", "серверное время"],

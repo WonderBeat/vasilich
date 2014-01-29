@@ -1,7 +1,7 @@
 package functional.chat.context
 
-import com.vasilich.commands.exec.ExecCgf
-import com.vasilich.commands.exec.ExecUnit
+import com.vasilich.commands.basic.exec.ExecCgf
+import com.vasilich.commands.basic.exec.ExecUnit
 import com.vasilich.connectors.xmpp.XmppConf
 import com.vasilich.connectors.xmpp.XmppRoomCfg
 import com.vasilich.os.OsDetails
