@@ -1,13 +1,8 @@
 package functional.chat.context
 
-<<<<<<< HEAD
-import com.vasilich.commands.basic.exec.ExecCgf
-import com.vasilich.commands.basic.exec.ExecUnit
-=======
 import com.vasilich.commands.exec.AnsibleCgf
 import com.vasilich.commands.exec.ExecCgf
 import com.vasilich.commands.exec.ExecUnit
->>>>>>> 45708c1a06906930387fc768c27934763551cea6
 import com.vasilich.connectors.xmpp.XmppConf
 import com.vasilich.connectors.xmpp.XmppRoomCfg
 import com.vasilich.os.OsDetails

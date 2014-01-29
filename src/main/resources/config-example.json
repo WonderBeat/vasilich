@@ -36,6 +36,7 @@
 	"ping": {
 		"aliases": ["ping"]
 	},
+
 	"history": {
 		"aliases": ["last"]
 	},
