@@ -50,7 +50,7 @@ public class XmppChat [Autowired] (private val chat: MultiUserChat): Chat<Messag
     override fun send(msg: String) {
         chat.sendMessage(msg)
     }
-    override fun recieve(callback: (Message) -> Unit) {
+    override fun receive(callback: (Message) -> Unit) {
         chat.addMessageListener(PacketListener {
             when(it) {
                 is Message -> callback(it)

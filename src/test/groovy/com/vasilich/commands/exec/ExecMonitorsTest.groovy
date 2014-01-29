@@ -9,7 +9,7 @@ class ExecMonitorsTest extends Specification {
 
         given:
         reactor.core.Observable reactor = Mock()
-        def monitor = ExecPackage.createMarkerBasedNotificator(['marker ', 'another'] as String[], reactor, new Topics())
+        def monitor = ExecPackage.createMarkerBasedMonitor(['marker ', 'another'] as String[], reactor, new Topics())
 
         when:
         monitor.invoke(input)

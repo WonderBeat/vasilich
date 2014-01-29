@@ -38,7 +38,7 @@ class SpringChatContext {
         Chat simpleChat = new FilteredChat(XmppPackage.createChat(listenerConfig),
                                             {true} as Function1,
                                             listeningForVasilichAliasResolver)
-        new ReactiveChat(simpleChat, reactor, new Topics("test-send", "test-recieve"))
+        new ReactiveChat(simpleChat, reactor, new Topics("test-send", "test-receive"))
     }
 
     /**

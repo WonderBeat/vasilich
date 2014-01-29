@@ -24,8 +24,8 @@ public class FilteredChat<T>(private val delegate: Chat<T>,
         }
     }
 
-    override fun recieve(callback: (msg: T) -> Unit) =
-            delegate.recieve {
+    override fun receive(callback: (msg: T) -> Unit) =
+            delegate.receive {
                 val filteredMsg = recieveFilter(it)
                 if(filteredMsg !is NopMessage) {
                     callback(filteredMsg)

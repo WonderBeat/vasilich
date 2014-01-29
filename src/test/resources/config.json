@@ -91,7 +91,21 @@
 		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"
 	},
 
-	"info": {
+    "ansible": {
+        "scripts": [
+            {
+                "aliases": ["ansible version"],
+                "script": "/opt/local/bin/ansible --version"
+            },
+            {
+                "aliases": ["ansible deploy"],
+                "script": "src/test/resources/ansible/deploy"
+            }
+        ],
+        "description": "I can execute ansible operations and process result."
+    },
+
+    "info": {
 		"aliases": ["can you do", "help"]
 	},
 
@@ -114,6 +128,4 @@
         "delay" : 1,
         "timeUnit" : "SECONDS"
     }
-
-
 }
