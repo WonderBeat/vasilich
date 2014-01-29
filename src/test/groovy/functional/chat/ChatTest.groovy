@@ -72,9 +72,9 @@ class ChatTest extends Specification {
                                        { assert it == 'Done' }]
         'v check git version'       | { assert it.contains('git version') } // no matter if ping succeeded or not
         // Exec: Ansible
-        "v ansible version"      | { assert it.startsWith('ansible') }
-        "v ansible deploy"      | { assert it.equalsIgnoreCase('Done') }
-        'v ansible spread'         | { assert it != null }
+//        "v ansible version"      | { assert it.startsWith('ansible') }
+//        "v ansible deploy"      | { assert it.equalsIgnoreCase('Done') }
+//        'v ansible spread'         | { assert it != null }
         // History
         'v last'                    |  { assert it != null }
         // Talk module

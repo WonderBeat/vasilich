@@ -92,24 +92,6 @@
 		"description": "I can execute scripts. But it's useless, because this is only for test and test matcher is set for 'abracadabra'"
 	},
 
-    "ansible": {
-        "scripts": [
-            {
-                "aliases": ["ansible version"],
-                "script": "/opt/local/bin/ansible --version"
-            },
-            {
-                "aliases": ["ansible deploy"],
-                "script": "src/test/resources/ansible/deploy"
-            },
-            {
-                "aliases": ["ansible spread"],
-                "script": "/opt/local/bin/ansible-playbook -i hosts.cfg --private-key=../out/EPM-HTNA/vasilich.pem rollout.playbook"
-            }
-        ],
-        "description": "I can execute ansible operations and process result."
-    },
-
     "info": {
 		"aliases": ["can you do", "help"]
 	},
