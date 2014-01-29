@@ -35,7 +35,7 @@ fun createAnsibleMonitor(reactor: Observable,
     return {
         it.split("\\n").forEach { line ->
             if(line.isNotEmpty()) {
-                reactor.notify(topics.send, Event.wrap(line))
+                reactor.notify(topics.send, Event.wrap("ansible: " + line.replaceAll("\\*", "").trim().toLowerCase()))
             }
         }
     }

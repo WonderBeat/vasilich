@@ -69,9 +69,9 @@ class ChatTest extends Specification {
                                        { assert it == 'Done' }]
         'v check git version'       | { assert it.contains('git version') } // no matter if ping succeeded or not
         'Vasilich, Do you know any good IT place to work in Spb?' | 'EPAM St.Petersburg'
-        'v last'                    |  {assert it.contains('Vasilich, Do you know any good IT place to work in Spb?')}
-        "v ansible version"      | { assert it != null }
-        "v ansible deploy"      | { assert it != null }
+        'v last'                    |  { assert it.contains('Vasilich, Do you know any good IT place to work in Spb?')}
+        "v ansible version"      | { assert it.startsWith('ansible') }
+        "v ansible deploy"      | { assert it.equalsIgnoreCase('Done') }
     }
 
 }
