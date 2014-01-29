@@ -21,7 +21,7 @@ class ChatTest extends Specification {
     @Autowired
     Reactor reactor
 
-    def timeout = 10
+    def timeout = 20
 
     private String replyFor(String msg) {
         reactor.notify('test-send', Event.wrap(msg))
